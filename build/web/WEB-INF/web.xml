@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <description>The server side of the aphiaplus Nuru ya Bonde Matching Indicators application that receives data from client side and saves to the central db.</description>
+    <display-name>aphiaplus_mois</display-name>
+    <servlet>
+        <servlet-name>showfacils</servlet-name>
+        <servlet-class>code.showfacils</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>importweeklydata</servlet-name>
+        <servlet-class>code.importweeklydata</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>gettargets</servlet-name>
+        <servlet-class>code.gettargets</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>showfacils</servlet-name>
+        <url-pattern>/showfacils</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>importweeklydata</servlet-name>
+        <url-pattern>/importweeklydata</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>gettargets</servlet-name>
+        <url-pattern>/gettargets</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>-1</session-timeout>
+    </session-config>
+</web-app>
