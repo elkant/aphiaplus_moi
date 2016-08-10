@@ -14,6 +14,14 @@
         <servlet-name>gettargets</servlet-name>
         <servlet-class>code.gettargets</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>excelreport</servlet-name>
+        <servlet-class>code.excelreport</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>copytemplates</servlet-name>
+        <servlet-class>code.copytemplates</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -25,6 +33,14 @@
     <servlet-mapping>
         <servlet-name>gettargets</servlet-name>
         <url-pattern>/gettargets</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>excelreport</servlet-name>
+        <url-pattern>/excelreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>copytemplates</servlet-name>
+        <url-pattern>/copytemplates</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

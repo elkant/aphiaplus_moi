@@ -29,7 +29,7 @@ public class importweeklydata extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         try (PrintWriter out = response.getWriter()) {
             
-              dbConnweb conn= new dbConnweb();
+        dbConnweb conn= new dbConnweb();
         String id="";      
         String facilityname=null;
         String startdate=null;
@@ -221,6 +221,8 @@ tested_cmts=request.getParameter("tested_cmts");
               
            String txtresponse="Error occured during data export at the server.";          
            String checkexisting="select id from weekly_data_new where id='"+id+"' and user='"+user+"'"; 
+           //String checkexisting="select id from weekly_data_new where id='"+id+"' "; 
+           //users should maintain the same date range
             
             /* TODO output your page here. You may use following sample code. */
          
@@ -447,7 +449,7 @@ tested_cmts=request.getParameter("tested_cmts");
    }
             out.println(txtresponse);
    
-     if(conn.st!=null){conn.st.close();}  
+         if(conn.st!=null){conn.st.close();}  
          if(conn.rs!=null){conn.rs.close();}  
          if(conn.pst1!=null){conn.pst1.close();}  
         

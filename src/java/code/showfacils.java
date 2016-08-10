@@ -52,6 +52,10 @@ public class showfacils extends HttpServlet {
                 
             
             }
+            
+            
+            if(conn.rs!=null){conn.rs.close();}
+            if(conn.st!=null){conn.st.close();}
            System.out.println(""+jarr); 
             response.setContentType("text/html;charset=UTF-8");
             response.setHeader("Access-Control-Allow-Origin", "*");

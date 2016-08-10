@@ -108,10 +108,10 @@
                             <i class="glyphicon glyphicon-cog"></i>
                             <br> Settings
                         </a>-->
-                        <a class="btn btn-primary col-sm-3" title="Help" data-toggle="modal" href="#help">
-                            <i class="glyphicon glyphicon-question-sign"></i>
-                            <br> Help
-                        </a>
+                       <a class="btn btn-primary col-sm-3" title="Excel report" data-toggle="modal" href="#excelreport">
+                            <i class="glyphicon glyphicon-stats"></i>
+                            <br> Excel Report
+                        </a> 
                     </div>
 
                     <hr>
@@ -443,6 +443,87 @@
 </div>
 
 
+
+<div class="modal" id="excelreport">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Generate Excel Report <span id="needsinternet"></span></h4>
+            </div>
+            <div class="modal-body">
+                <form  id="excelreportsfom" method="post">
+                                <div class="control-group">
+                                    <label><font color="red"><b>*</b></font>Report Start Date</label>
+                                    <div class="controls">
+                                       <input type="text"  name ="startdaterpt" id="startdaterpt"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                    </div>
+                                </div> 
+                    
+                    
+                  <div class="control-group">
+                                    <label><font color="red"><b>*</b></font>Report End Date</label>
+                                    <div class="controls">
+                                       <input type="text"  name ="enddaterpt" id="enddaterpt"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                    </div>
+                                </div> 
+                    
+                   <!--  <div class="control-group" >
+                                    <label>County </label>
+                                    <div class="controls">
+                                        <select  name="rpt_county" id="rpt_county" style="width:100%;" class="form-control">
+                                            <option>Select County</option>
+                                             <option value="Baringo">Baringo</option>
+                                             <option value="Kajiado">Kajiado</option>
+                                             <option value="Laikipia">Laikipia</option>
+                                             <option value="Nakuru">Nakuru</option>
+                                             <option value="Narok">Narok</option>
+                                            
+                                           
+                                        </select>
+                                    </div>
+                                </div> -->
+                    
+                   <!-- <div class="control-group" >
+                                    <label>Facility </label>
+                                    <div class="controls">
+                                        <select  name="rpt_facility" id="rpt_facility" style="width:100%;" class="form-control">
+                                            <option>Select Facility</option>
+                                             
+                                            
+                                           
+                                        </select>
+                                    </div>
+                                </div> -->
+                    
+                    
+                                <div class="control-group">
+                                    <label></label>
+                                    <div class="controls">
+                                        <button onclick=" getreport();" id="excelreportbtn"   style="margin-left: 30%;"  class="btn-lg btn-info active">
+                                            Generate
+                                        </button>
+                                        
+                                        <img src='images/ajax_loader.gif' alt='loading' style="display:none; margin-left:30% ;" class='loading'/>
+                                        
+                                    </div>
+                                </div>   
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
+              
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dalog -->
+</div>
+
+
+
+
 <div class="modal" id="help">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -505,11 +586,17 @@
                 <script src="js/bootstrap-datepicker.min.js"></script>
                 <script src="js/select2.min.js"></script>
                  <script src="js/pouchdb-4.0.1.js"></script>
+                 
+                  <script type="text/javascript" src="js/jquery.fileDownload.js"></script>
                  <script type="text/javascript" src="js/datatables.min.js"></script>
 <!--                   <script type="text/javascript" charset="utf-8" src="cordova-1.5.0.js"></script>  -->
                  <script>
                     
-                    
+                 
+    
+    var hostname="http://104.45.29.195";
+   // var hostname="localhost";
+    
                          $('.dates').datepicker({
                              todayHighlight: true, clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
      });
@@ -529,7 +616,7 @@
 //load data from the cloud server 
    
               $.ajax({
-                         url:'http://104.45.29.195:8080/aphiaplus_moi/showfacils',                            
+                         url:hostname+':8080/aphiaplus_moi/showfacils',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) {
@@ -843,7 +930,7 @@ function gettargets(){
     
    
               $.ajax({
-                    url:'http://104.45.29.195:8080/aphiaplus_moi/gettargets',                            
+                    url:hostname+':8080/aphiaplus_moi/gettargets',                            
                     type:'post',  
                     dataType: 'json',  
                     success: function(data) {
@@ -1764,9 +1851,14 @@ function selectsearchdata()
               //how to reference each column 
               //alert(dat.doc.startdate);
               //dat.doc._id
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>";
+              if(dat.doc.syncstatus==="Yes"){
+                 statusicon=""; 
+                  
+              }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit</button></td></tr>";
+		 dbdata+="<tr><td> "+dat.doc.enddate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
           	    } //end of for loop
                     
 	appendtabledata(dbdata);
@@ -1791,7 +1883,7 @@ function selectsearchdata()
 
 function appendtabledata( dbdata ){
     
-     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th>week <br/>beginning </th><th>Facility</th><th>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
+     $("#searchtablediv").html("<table id='searchtable' class='table table-striped table-bordered'><thead><tr><th style='width:30%;'>week <br/>ending </th><th style='width:50%;'>Facility</th><th style='width:20%;'>Edit</th></tr></thead><tbody>"+dbdata+"</tbody></table>");
          
 	   $(document).ready(function() {
                 
@@ -2501,7 +2593,7 @@ function importdata(){
             //url:'http://104.45.29.195:8080/aphiaplus_moi/importweeklydata',
             
              $.ajax({
-                         url:'http://104.45.29.195:8080/aphiaplus_moi/importweeklydata',                            
+                         url:hostname+':8080/aphiaplus_moi/importweeklydata',                            
                     type:'post', 
 data:{id:dat.doc._id,
 facilityname:dat.doc.facility,
@@ -2980,6 +3072,10 @@ $("#reportsform").submit(function(e){
     return false;
 });
 
+$("#excelreportsfom").submit(function(e){
+    return false;
+});
+
  $('input').css('border-color','#337ab7');
 
 
@@ -3020,8 +3116,86 @@ selectwidth100();
 
 <script>
 $(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
+    $('[data-toggle="popover"]').popover(); 
+    
+  
+    
 });
+
+
+	$('#unexportedno').each(function() {
+    var elem = $(this);
+    setInterval(function() {
+        if (elem.css('visibility') == 'hidden') {
+            elem.css('visibility', 'visible');
+        } else {
+            elem.css('visibility', 'hidden');
+        }    
+    }, 500);
+});
+
+
+
+
+function getreport(){
+    
+    
+    var exelstart=$("#startdaterpt").val();
+    var exelend=$("#enddaterpt").val();
+   
+        
+        if (exelstart==='')
+     {
+         
+     alert('Select report begining date');
+   $("#startdaterpt").focus();    
+     }    
+   //end date
+      else if (exelend==='')
+     {
+         
+     alert('Select report ending date');
+   $("#enddaterpt").focus();    
+     } 
+     
+      else  if(Date.parse(exelstart) > Date.parse(exelend)){
+                    alert(" Report Start date cannot be greater than end date.");   
+                    $("#enddaterpt").focus();  
+                }
+                else {
+                    //call the report generation page
+                 downloadrpt(exelstart,exelend) ;  
+                    
+                }
+        
+    
+}
+
+
+
+  function downloadrpt(startdate,enddate){
+      
+                $('.loading').show();
+                $('#excelreportbtn').hide();
+               
+                //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
+             
+                var ur=hostname+":8080/aphiaplus_moi/excelreport?startdate=" + startdate + "&enddate=" + enddate ;
+ console.log(ur);
+                $.fileDownload(ur).done(function () { $('.loading').hide(); $('#excelreportbtn').show(); $('#excelreportbtn').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!');$('.loading').hide(); $('#excelreportbtn').show(); });
+ 
+                //$('.loading').hide();
+            }
+
+
+
+  function resetgeneratebutton(){
+    
+   $("#excelreportbtn").removeClass('btn-lg btn-success active').addClass('btn-lg btn-info active');  
+    
+}
+
+
 </script>
 
 	</body>

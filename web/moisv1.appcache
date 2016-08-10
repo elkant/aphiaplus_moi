@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2016-07-31 v3.0.0
+# 2016-08-10 v5.1.789
 
 progressbar.json
 logo.png
@@ -16,6 +16,16 @@ js/bootstrap-datepicker.min.js
 js/select2.min.js
 js/pouchdb-4.0.1.js
 js/datatables.min.js
+js/jquery.fileDownload.js
+images/ajax_loader.gif
+images/favicon.ico
+images/sort_asc.png
+images/sort_asc_disabled.png
+images/sort_both.png
+images/sort_desc.png
+images/sort_desc_disabled.png
+
+
 
 fonts/glyphicons-halflings-regular.woff2
 fonts/glyphicons-halflings-regular.woff
@@ -23,6 +33,9 @@ fonts/glyphicons-halflings-regular.ttf
 
 NETWORK:
 #index.jsp
+#MOIS.xlsm
+#~$MOIS.xlsm
+#919B2700
 
 FALLBACK:
 #/html/ /offline.html
