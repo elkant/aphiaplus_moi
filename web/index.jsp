@@ -8,7 +8,7 @@
 
 
 <!DOCTYPE html>
-<html  manifest="moisv1.appcache" >
+<html  manifest="moisv1.appcache">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 		<meta charset="utf-8">
@@ -77,7 +77,7 @@
 
             
             
-          <h5 style="text-align: center;color:blue;">Matching Order Indicators App </h5>
+          <h5 style="text-align: center;color:blue;">Matching Order Indicators system version 1.1.0 </h5>
 
           
   
@@ -143,7 +143,7 @@
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Week Beginning </label>
                                     <div class="controls">
-                                        <input type="text" name ="startdate" id="startdate"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                        <input type="text" onchange="checkids();" name ="startdate" id="startdate" data-date-end-date="0d" class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
                                         <input type="hidden"  name ="rowid" id="rowid"  />
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                    <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Week Ending </label>
                                     <div class="controls">
-                                        <input type="text" name="enddate" id="enddate"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                        <input type="text" onchange="checkids();" name="enddate" id="enddate" data-date-end-date="0d"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
                                     </div>
                                 </div>
                                         
@@ -183,7 +183,7 @@
                                   <div class="control-group">
                                     <label> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls">
-                                        <select  onchange="showreports();settargets(this);"   name="facilityname" id="facilityname" class="form-control" >
+                                        <select  onchange="showreports();settargets(this);checkids();"   name="facilityname" id="facilityname" class="form-control" >
                                             <option>Select Facility Name</option>
                                            
                                         </select>
@@ -195,7 +195,7 @@
                                     <label>County:</label>
                                     <div class="controls">
                                         <select  name="county" id="county" class="form-control">
-                                            <option>Select County</option>
+                                            <option value="">Select County</option>
                                              <option value="Baringo">Baringo</option>
                                              <option value="Kajiado">Kajiado</option>
                                              <option value="Laikipia">Laikipia</option>
@@ -210,7 +210,7 @@
                                     <label>Sub-County:</label>
                                     <div class="controls">
                                         <select  name="subcounty" id="subcounty" class="form-control">
-                                            <option>Select Sub-county</option>
+                                             <option>Select Sub-county</option>
                                              <option value="Baringo">Baringo</option>
                                              <option value="Kajiado">Kajiado</option>
                                              <option value="Laikipia">Laikipia</option>
@@ -224,8 +224,6 @@
                                 
                                           </td></tr>
                                         
-                                   
-                                  
                                     </table>
                                          <table class='table table-striped table-bordered' id="dynamicindicators"  > 
                                    
@@ -271,12 +269,15 @@
                                             SAVE & OPEN REPORT
                                         </button>
                                      </div>
-                                     <div class="controls">
+                                    <div class="controls">
                                         <button type="submit" id='updatebutton' onclick="updateweeklydata();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
-                                            UPDATE & OPEN REPORT
+                                            UPDATE
+                                        </button>
+                                    
+                                        <button title="if you have selected  facility data for editing and you would like it saved as new instead of updating it, then click here" type="submit" id='savenewbutton' onclick="validateweeklydata();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                            SAVE AS NEW
                                         </button>
                                     </div>
-                                   
                                     
                                 </div>
                                         </td></tr>
@@ -399,9 +400,9 @@
             <div class="modal-body">
                 <form action="#" id="userform" method="post">
                  <div class="control-group">
-                                    <label><font color="red"><b>*</b></font>  User Name</label>
+                                    <label><font color="red"><b>*</b></font>  User Email</label>
                                     <div class="controls">
-                                        <input type="text" size="14"   required name="username" id="username" class="form-control" >
+                                        <input type="text" size="14" placeholder="eg MJohn@fhi360.org"   required name="username" id="username" class="form-control" >
                                     </div>
                                 </div> 
                     
@@ -409,7 +410,7 @@
                                     <label>County Supporting:</label>
                                     <div class="controls">
                                         <select  name="usercounty" id="usercounty" style="width:100%;" class="form-control">
-                                            <option>Select County</option>
+                                            <option value="">Select County</option>
                                              <option value="Baringo">Baringo</option>
                                              <option value="Kajiado">Kajiado</option>
                                              <option value="Laikipia">Laikipia</option>
@@ -468,11 +469,11 @@
                                     </div>
                                 </div> 
                     
-                   <!--  <div class="control-group" >
-                                    <label>County </label>
+                    <div class="control-group" >
+                                    <label>County</label>
                                     <div class="controls">
                                         <select  name="rpt_county" id="rpt_county" style="width:100%;" class="form-control">
-                                            <option>Select County</option>
+                                            <option value="">Select County (optional)</option>
                                              <option value="Baringo">Baringo</option>
                                              <option value="Kajiado">Kajiado</option>
                                              <option value="Laikipia">Laikipia</option>
@@ -482,7 +483,7 @@
                                            
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
                     
                    <!-- <div class="control-group" >
                                     <label>Facility </label>
@@ -594,18 +595,23 @@
                     
                  
     
-    var hostname="http://104.45.29.195";
-   // var hostname="localhost";
-    
-                         $('.dates').datepicker({
-                             todayHighlight: true, clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
-     });
+    //var hostname="http://104.45.29.195";
+    var hostname="http://localhost";
+
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                  </script>
 
                  <script type="text/javascript">
   $(document).ready(function(){
-  $('facilityname').select2();    
+      
+          
+                         $('.dates').datepicker({
+                             todayHighlight: true, clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
+     });
+      
+  $('facilityname').select2();  
+  $('#rowid').val("");  
+  
   });   
                  </script>
 
@@ -1991,7 +1997,9 @@ function loadsavedweekelydata(id,facility,openreportstab ){
         //$(".editdata").show();
      $("#savebutton").hide();
      $("#updatebutton").show();
-        
+     $("#savenewbutton").show();
+      checkids();
+      
  $('#newdatabutton').html("<i class='glyphicon glyphicon-edit'></i>Edit Data");
 
   //if this is a request to show the unentered comments
@@ -3142,7 +3150,7 @@ function getreport(){
     
     var exelstart=$("#startdaterpt").val();
     var exelend=$("#enddaterpt").val();
-   
+    var countyrpt=$("#rpt_county").val();
         
         if (exelstart==='')
      {
@@ -3164,7 +3172,7 @@ function getreport(){
                 }
                 else {
                     //call the report generation page
-                 downloadrpt(exelstart,exelend) ;  
+                 downloadrpt(exelstart,exelend,countyrpt) ;  
                     
                 }
         
@@ -3173,16 +3181,16 @@ function getreport(){
 
 
 
-  function downloadrpt(startdate,enddate){
+  function downloadrpt(startdate,enddate,cnty){
       
                 $('.loading').show();
                 $('#excelreportbtn').hide();
                
                 //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
              
-                var ur=hostname+":8080/aphiaplus_moi/excelreport?startdate=" + startdate + "&enddate=" + enddate ;
+                var ur=hostname+":8080/aphiaplus_moi/excelreport?startdate=" + startdate + "&enddate=" + enddate+ "&county=" + cnty ;
  console.log(ur);
-                $.fileDownload(ur).done(function () { $('.loading').hide(); $('#excelreportbtn').show(); $('#excelreportbtn').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!');$('.loading').hide(); $('#excelreportbtn').show(); });
+                $.fileDownload(ur).done(function () { $('.loading').hide(); $('#excelreportbtn').show(); $('#excelreportbtn').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#excelreportbtn').show(); });
  
                 //$('.loading').hide();
             }
@@ -3194,6 +3202,42 @@ function getreport(){
    $("#excelreportbtn").removeClass('btn-lg btn-success active').addClass('btn-lg btn-info active');  
     
 }
+
+
+
+
+function checkids(){
+    
+     facility=$("#facilityname").val();
+     startdate=$("#startdate").val();   
+     enddate=$("#enddate").val();
+     
+     
+ var facilitynameandmfl=facility.split("_");        
+     var startd=startdate.replace('-','');      
+     var startd=startd.replace('-','');      
+     var endd=enddate.replace('-','');      
+     var endd=endd.replace('-','');      
+      id=facilitynameandmfl[0]+"_"+startd+"_"+endd;
+      //this should not be cleared
+      var newid = $("#rowid").val();   
+    
+    console.log(newid +" **** "+id);
+    if(newid!=='' && id!=='' && id!=='Select Facility Name__'){
+    
+    if(newid===id){
+        //hide the save as new 
+        $("#savenewbutton").hide();
+        
+                  }
+        else if(newid!==id){
+        //hide the save as new 
+        $("#savenewbutton").show();
+        
+                           } 
+                  
+        }
+                 }
 
 
 </script>

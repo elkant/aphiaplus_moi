@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2016-08-10 v5.1.789
+# 2016-08-21 v7.0.5
 
 progressbar.json
 logo.png
@@ -34,7 +34,6 @@ fonts/glyphicons-halflings-regular.ttf
 NETWORK:
 #index.jsp
 #MOIS.xlsm
-#~$MOIS.xlsm
 #919B2700
 
 FALLBACK:

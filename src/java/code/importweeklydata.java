@@ -11,10 +11,12 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import notification.sendmail;
 
 /**
  *
@@ -24,16 +26,24 @@ public class importweeklydata extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
-        try (PrintWriter out = response.getWriter()) {
-            
+        
+         sendmail sm=new sendmail();
+        
+        PrintWriter out = response.getWriter();
+        String txtresponse="Error occured during data export at the server."; 
         dbConnweb conn= new dbConnweb();
-        String id="";      
-        String facilityname=null;
+        
+         String facilityname=null;
         String startdate=null;
         String enddate=null;
+        
+        try {
+        
+        String id="";      
+       
         
         
         
@@ -219,8 +229,8 @@ tested_cmts=request.getParameter("tested_cmts");
            
          
               
-           String txtresponse="Error occured during data export at the server.";          
-           String checkexisting="select id from weekly_data_new where id='"+id+"' and user='"+user+"'"; 
+                  
+           String checkexisting="select id from weekly_data_new where id  like '"+id+"' and user='"+user+"'"; 
            //String checkexisting="select id from weekly_data_new where id='"+id+"' "; 
            //users should maintain the same date range
             
@@ -332,30 +342,53 @@ tested_cmts=request.getParameter("tested_cmts");
                         if(conn.pst1.executeUpdate()==1)
                         {    
                             txtresponse="<font color='green'> Data for <b> "+facilityname+" </b> updated succesfully for dates "+startdate+" to "+enddate+" </font>";
-                            
+                             sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org");
+                             
                         }
                         else 
                         {
-                        txtresponse="<font color='green'>Data for <b>"+facilityname+"</b> NOT updated  for dates "+startdate+" to "+enddate+" </font>";
+                        txtresponse="<font color='green'>Data for <b>"+facilityname+"</b></font><font color='red'> NOT updated </font><font color='green'> for dates "+startdate+" to "+enddate+". This is because data for a similar date already exists. </font>";
                         }
    
    
+                       System.out.println(" update weekly_data_new set facilityname='"+facilityname+"', startdate='"+startdate+"', enddate='"+enddate+"', hiv_pos_target_child='"+hiv_pos_target_child+"' ,hiv_pos_target_adult='"+hiv_pos_target_adult+"' ,hiv_pos_target_total='"+hiv_pos_target_total+"' ,hiv_pos_child='"+hiv_pos_child+"' , hiv_pos_adult='"+hiv_pos_adult+"' "
+                 + " ,hiv_pos_total='"+hiv_pos_total+"' ,new_care_child='"+new_care_child+"' ,new_care_adult='"+new_care_adult+"' ,new_care_total='"+new_care_total+"' ,new_art_target_child='"+new_art_target_child+"' ,new_art_target_adult='"+new_art_target_adult+"' ,new_art_target_total='"+new_art_target_total+"' ,started_art_child='"+started_art_child+"' "
+                 + " ,started_art_adult='"+started_art_adult+"' ,started_art_total='"+started_art_total+"' ,viral_load_target_child='"+viral_load_target_child+"' ,viral_load_target_adult='"+viral_load_target_adult+"' ,viral_load_target_total='"+viral_load_target_total+"' ,viral_load_done_child='"+viral_load_done_child+"' "
+                 + " ,viral_load_done_adult='"+viral_load_done_adult+"' ,viral_load_done_total='"+viral_load_done_total+"' ,ipt_target_child='"+ipt_target_child+"' ,ipt_target_adult='"+ipt_target_adult+"' ,ipt_target_total='"+ipt_target_total+"' ,ipt_child='"+ipt_child+"' ,ipt_adult='"+ipt_adult+"' ,ipt_total='"+ipt_total+"' "
+                 + " ,testing_target_child='"+testing_target_child+"' ,testing_target_adult='"+testing_target_adult+"' ,testing_target_total='"+testing_target_total+"' ,test_child='"+test_child+"' ,test_adult='"+test_adult+"' ,test_total='"+test_total+"' "
+                 + " ,pmtct_hiv_pos_target='"+pmtct_hiv_pos_target+"',pmtct_hiv_pos='"+pmtct_hiv_pos+"',eid_target='"+eid_target+"',eid_done='"+eid_done+"',viral_load_mothers_target='"+viral_load_mothers_target+"',viral_load_mothers_done='"+viral_load_mothers_done+"',"
+                 + " user ='"+user+"',hiv_pos_yield_perc_child='"+hiv_pos_yield_perc_child+"' ,hiv_pos_yield_perc_adult='"+hiv_pos_yield_perc_adult+"' ,hiv_pos_yield_perc_adult='"+hiv_pos_yield_perc_adult+"' ,hiv_pos_care_perc_child='"+hiv_pos_care_perc_child+"' ,hiv_pos_care_perc_adult='"+hiv_pos_care_perc_adult+"' , "
+                 + " hiv_pos_care_perc_all='"+hiv_pos_care_perc_all+"' ,started_art_perc_child='"+started_art_perc_child+"' ,started_art_perc_adult='"+started_art_perc_adult+"' ,started_art_perc_all='"+started_art_perc_all+"' ,viral_test_perc_child='"+viral_test_perc_child+"' ,viral_test_perc_adult='"+viral_test_perc_adult+"' "
+                 + " ,viral_test_perc_all='"+viral_test_perc_all+"' ,ipt_done_perc_child='"+ipt_done_perc_child+"' ,ipt_done_perc_adult='"+ipt_done_perc_adult+"' ,ipt_done_perc_all='"+ipt_done_perc_all+"' ,tested_perc_child='"+tested_perc_child+"' ,tested_perc_adult='"+tested_perc_adult+"' ,tested_perc_all='"+tested_perc_all+"' "
+                 + " ,hiv_pos_yield_cmts='"+hiv_pos_yield_cmts+"' ,hiv_pos_care_cmts='"+hiv_pos_care_cmts+"' ,started_art_cmts='"+started_art_cmts+"' ,viral_test_cmts='"+viral_test_cmts+"' ,ipt_done_cmts='"+ipt_done_cmts+"' ,tested_cmts='"+tested_cmts+"',viral_load_mothers_perc='"+viral_load_mothers_perc+"',eid_done_perc='"+eid_done_perc+"' "
+                 + " ,pmtct_hiv_pos_perc='"+pmtct_hiv_pos_perc+"'  ,viral_load_mothers_cmts='"+viral_load_mothers_cmts+"' ,eid_done_cmts='"+eid_done_cmts+"',pmtct_hiv_pos_cmts='"+pmtct_hiv_pos_cmts+"' "
+                 + " where id='"+id+"' ");
+                        
    
    }
    else 
    {
    //do insert code here
    
-       
+       System.out.println("insert into weekly_data_new"
+  + "( id,facilityname,startdate,enddate, hiv_pos_target_child  ,hiv_pos_target_adult  ,hiv_pos_target_total ,hiv_pos_child , hiv_pos_adult   ,hiv_pos_total  ,new_care_child  ,new_care_adult  ,new_care_total  ,new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child ,started_art_adult  ,started_art_total  ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child  ,viral_load_done_adult  ,viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child  ,ipt_adult  ,ipt_total  ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child  ,test_adult  ,test_total , pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done,viral_load_mothers_target,viral_load_mothers_done,user ,hiv_pos_yield_perc_child  ,hiv_pos_yield_perc_adult  ,hiv_pos_yield_perc_all  ,hiv_pos_care_perc_child  ,hiv_pos_care_perc_adult  , hiv_pos_care_perc_all  ,started_art_perc_child  ,started_art_perc_adult  ,started_art_perc_all  ,viral_test_perc_child  ,viral_test_perc_adult ,viral_test_perc_all  ,ipt_done_perc_child  ,ipt_done_perc_adult  ,ipt_done_perc_all  ,tested_perc_child  ,tested_perc_adult  ,tested_perc_all  ,hiv_pos_yield_cmts  ,hiv_pos_care_cmts  ,started_art_cmts  ,viral_test_cmts  ,ipt_done_cmts  ,tested_cmts,viral_load_mothers_perc,eid_done_perc  ,pmtct_hiv_pos_perc  ,viral_load_mothers_cmts,eid_done_cmts,pmtct_hiv_pos_cmts  ) "
++ " values ('"+id+"','"+facilityname+"','"+startdate+"','"+enddate+"','"+hiv_pos_target_child+"','"+hiv_pos_target_adult+"','"+hiv_pos_target_total+"','"+hiv_pos_child+"','"+hiv_pos_adult+"',"
+  + "'"+hiv_pos_total+"','"+new_care_child+"','"+new_care_adult+"','"+new_care_total+"','"+new_art_target_child+"','"+new_art_target_adult+"','"+new_art_target_total+"','"+started_art_child+"',"
+  + "'"+started_art_adult+"','"+started_art_total+"','"+viral_load_target_child+"','"+viral_load_target_adult+"','"+viral_load_target_total+"','"+viral_load_done_child+"','"+viral_load_done_adult+"',"
+  + "'"+viral_load_done_total+"','"+ipt_target_child+"','"+ipt_target_adult+"','"+ipt_target_total+"','"+ipt_child+"','"+ipt_adult+"','"+ipt_total+"','"+testing_target_child+"','"+testing_target_adult+"',"
+         + "'"+testing_target_total+"','"+test_child+"','"+test_adult+"','"+test_total+"','"+pmtct_hiv_pos_target+"','"+pmtct_hiv_pos+"','"+eid_target+"','"+eid_done+"','"+viral_load_mothers_target+"',"
+         + "'"+viral_load_mothers_done+"','"+user+"','"+hiv_pos_yield_perc_child+"','"+hiv_pos_yield_perc_adult+"','"+hiv_pos_yield_perc_all+"','"+hiv_pos_care_perc_child+"','"+hiv_pos_care_perc_adult+"',"
+         + "'"+hiv_pos_care_perc_all+"','"+started_art_perc_child+"','"+started_art_perc_adult+"','"+started_art_perc_all+"','"+viral_test_perc_child+"','"+viral_test_perc_adult+"','"+viral_test_perc_all+"',"
+         + "'"+ipt_done_perc_child+"','"+ipt_done_perc_adult+"','"+ipt_done_perc_all+"','"+tested_perc_child+"','"+tested_perc_adult+"','"+tested_perc_all+"','"+hiv_pos_yield_cmts+"','"+hiv_pos_care_cmts+"',"
+         + "'"+started_art_cmts+"','"+viral_test_cmts+"','"+ipt_done_cmts+"','"+tested_cmts+"','"+viral_load_mothers_perc+"','"+eid_done_perc+"','"+pmtct_hiv_pos_perc+"','"+viral_load_mothers_cmts+"','"+eid_done_cmts+"','"+pmtct_hiv_pos_cmts+"')");                   
+            
          
        
          String insert="insert into weekly_data_new( id,facilityname,startdate,enddate, hiv_pos_target_child  ,hiv_pos_target_adult  ,hiv_pos_target_total ,hiv_pos_child , hiv_pos_adult   ,hiv_pos_total  ,new_care_child  ,new_care_adult  ,new_care_total  ,new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child ,started_art_adult  ,started_art_total  ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child  ,viral_load_done_adult  ,viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child  ,ipt_adult  ,ipt_total  ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child  ,test_adult  ,test_total , pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done,viral_load_mothers_target,viral_load_mothers_done,user ,hiv_pos_yield_perc_child  ,hiv_pos_yield_perc_adult  ,hiv_pos_yield_perc_all  ,hiv_pos_care_perc_child  ,hiv_pos_care_perc_adult  , hiv_pos_care_perc_all  ,started_art_perc_child  ,started_art_perc_adult  ,started_art_perc_all  ,viral_test_perc_child  ,viral_test_perc_adult ,viral_test_perc_all  ,ipt_done_perc_child  ,ipt_done_perc_adult  ,ipt_done_perc_all  ,tested_perc_child  ,tested_perc_adult  ,tested_perc_all  ,hiv_pos_yield_cmts  ,hiv_pos_care_cmts  ,started_art_cmts  ,viral_test_cmts  ,ipt_done_cmts  ,tested_cmts,viral_load_mothers_perc,eid_done_perc  ,pmtct_hiv_pos_perc  ,viral_load_mothers_cmts,eid_done_cmts,pmtct_hiv_pos_cmts  ) "
                  + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
                       conn.pst1=conn.conne.prepareStatement(insert);    
                           
-                       
-                   
-                        conn.pst1.setString(1,id);
+                 conn.pst1.setString(1,id);
                         conn.pst1.setString(2,facilityname);
                         conn.pst1.setString(3,startdate);
                         conn.pst1.setString(4,enddate);
@@ -376,7 +409,6 @@ tested_cmts=request.getParameter("tested_cmts");
                         conn.pst1.setString(19,started_art_total);
                         conn.pst1.setString(20,viral_load_target_child);
                         conn.pst1.setString(21,viral_load_target_adult);
-                       // conn.pst1.setString(22,timestamp);
                         conn.pst1.setString(22,viral_load_target_total); 
                         conn.pst1.setString(23,viral_load_done_child);
                         conn.pst1.setString(24,viral_load_done_adult);
@@ -430,31 +462,52 @@ tested_cmts=request.getParameter("tested_cmts");
                         conn.pst1.setString(72,viral_load_mothers_cmts);
                         conn.pst1.setString(73,eid_done_cmts);
                         conn.pst1.setString(74,pmtct_hiv_pos_cmts);
-                       
+            
                      
                         
                         
                         if(conn.pst1.executeUpdate()==1){
                             
                             txtresponse="<font color='green'> Data for "+facilityname+" added succesfully for dates "+startdate+" to "+enddate+" </font>";
-                            
+                           
+                            //add team leaders variable at this point 
+                            sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org");
                                                         } 
                         else {
                             
-                          txtresponse="<font color='green'>Data for "+facilityname+" NOT inserted succesfully for dates "+startdate+" to "+enddate+" </font>";
+                          txtresponse="<font color='green'>Data for "+facilityname+" </font><font color='red'>  NOT inserted </font><font color='green'> succesfully for dates "+startdate+" to "+enddate+". This could be a duplicate error. </font>";
                             
                              }
        
        
    }
-            out.println(txtresponse);
+           
    
          if(conn.st!=null){conn.st.close();}  
          if(conn.rs!=null){conn.rs.close();}  
          if(conn.pst1!=null){conn.pst1.close();}  
+         if(conn.conne!=null){conn.conne.close();}  
         
    
+        } catch (SQLException ex) {
+            Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
+             txtresponse="<font color='red'>Data for "+facilityname+" NOT inserted succesfully for dates "+startdate+" to "+enddate+".  "+ex+" </font>";
+        //send an email at this point of the exception
+            
+            try {
+                sm.Sendemail("MOIS IMPORT",ex.toString(), "MYSQL IMPORTING ERROR ","EKaunda@fhi360.org");
+            } catch (MessagingException ex1) {
+                Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            
+        } catch (MessagingException ex) {
+            Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        
+      out.println(txtresponse);   
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -469,11 +522,7 @@ tested_cmts=request.getParameter("tested_cmts");
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -487,11 +536,7 @@ tested_cmts=request.getParameter("tested_cmts");
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

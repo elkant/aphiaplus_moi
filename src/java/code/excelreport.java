@@ -99,15 +99,31 @@ ct.copymacros(sourcepath,np);
             String startdate="2016-06-25";
             
             String enddate="2016-08-10";
+            String county="";
             
        
             if(request.getParameter("startdate")!=null){
             startdate=request.getParameter("startdate");
             }
+            if(request.getParameter("county")!=null){
+                if(!request.getParameter("county").equals(""))
+               {
+                
+            county=request.getParameter("county");
+            
+                }
+            }
+           
+            
             
             if(request.getParameter("enddate")!=null){
             enddate=request.getParameter("enddate");
             }
+            String countywhere=" and 1=1";
+            if(!county.equals("")){
+            countywhere="  and ( county like '"+county+"' )";
+            }
+            
             
             DateTime dateTime1 = new DateTime(startdate);
             DateTime dateTime2 = new DateTime(enddate);
@@ -117,7 +133,7 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
            
             if(weeks==0){
             weeks=1;
-            }
+                        }
             String header[]="county,subcounty,facilityname,startdate,enddate,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done,viral_load_mothers_target,viral_load_mothers_done,hiv_pos_yield_perc_child,hiv_pos_yield_perc_adult,hiv_pos_yield_perc_all,hiv_pos_care_perc_child,hiv_pos_care_perc_adult,hiv_pos_care_perc_all,started_art_perc_child,started_art_perc_adult,started_art_perc_all,viral_test_perc_child,viral_test_perc_adult,viral_test_perc_all,ipt_done_perc_child,ipt_done_perc_adult,ipt_done_perc_all,tested_perc_child,tested_perc_adult,tested_perc_all,viral_load_mothers_perc,eid_done_perc,pmtct_hiv_pos_perc,hiv_pos_yield_cmts,hiv_pos_care_cmts,started_art_cmts,viral_test_cmts,ipt_done_cmts,tested_cmts,viral_load_mothers_cmts,eid_done_cmts,pmtct_hiv_pos_cmts".split(",");
             String headername[]="COUNTY,SUB-COUNTY,FACILITY,START DATE,END DATE,HIV POSITIVE TARGET CHILDREN,HIV POSITIVE TARGET ADULT,HIV POSITIVE TARGET TOTAL,HIV POSITIVE CHILDREN,HIV POSITIVE ADULT,HIV POSITIVE TOTAL, NEW CARE CHILDREN,NEW CARE ADULT,NEW CARE TOTAL,NEW ART TARGET CHILDREN,NEW ART TARGET ADULT,NEW ART TARGET TOTAL,STARTED ART CHILDREN,STARTED ART ADULT,STARTED ART TOTAL,VIRAL LOAD TARGET CHILDREN,VIRAL LOAD TARGET ADULT,VIRAL LOAD TARGET TOTAL,VIRAL LOAD DONE CHILDREN,VIRAL LOAD DONE ADULT,VIRAL LOAD DONE TOTAL,IPT TARGET CHILDREN,IPT TARGET ADULT,IPT TARGET TOTAL,IPT CHILDREN,IPT ADULT,IPT TOTAL,TESTING TARGET CHILDREN,TESTING TARGET ADULT,TESTING TARGET TOTAL,TESTING CHILDREN,TESTING ADULT,TESTING TOTAL,PMTCT HIV POSITIVE TARGET,PMTCT HIV POSITIVE ,EID TARGET,EID DONE,VIRAL LOAD MOTHERS TARGET,VIRAL LOAD MOTHERS DONE,HIV POSITIVE YIELD CHILDREN ,HIV POSITIVE YIELD ADULT,HIV POSITIVE YIELD ALL,HIV POSITIVE CARE CHILDREN,HIV POSITIVE CARE ADULT,HIV POSITIVE CARE ALL,STARTED ART CHILDREN,STARTED ART ADULT,STARTED ART ,VIRAL TEST CHILDREN,VIRAL TEST ADULT,VIRAL TEST ALL,IPT DONE CHILD,IPT DONE ADULT,IPT DONE ALL,TESTED CHILD,TESTED ADULT,TESTED ALL,VIRAL LOAD MOTHERS ,EID DONE,PMTCT HIV POSITIVE,HIV POSITIVE YIELD COMMENTS,HIV POSITIVE CARE COMMENTS,STARTED ART COMMENTS,VIRAL TEST COMMENTS,IPT DONE COMMENTS ,TESTED COMMENTS,VIRAL LOAD MOTHERS COMMENTS,EID DONE COMMENTS,PMTCT HIV POSITIVE COMMENTS,REPORTING RATE".split(",");
             
@@ -135,7 +151,8 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
             
             dbConnweb conn= new dbConnweb();
             
-            String where=" (enddate between '"+startdate+"' and '"+enddate+"' ) ";      
+            String where=" (enddate between '"+startdate+"' and '"+enddate+"')  "+countywhere+"  ";      
+            String where1=" (enddate between '"+startdate+"' and '"+enddate+"') ";      
             
             //get data in report form and add into the various json macros.
 //String query="select facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total ,hiv_pos_child as hiv_pos_child , hiv_pos_adult as hiv_pos_adult  ,hiv_pos_total as hiv_pos_total  ,new_care_child as new_care_child ,new_care_adult as new_care_adult ,new_care_total as new_care_total  , new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child as started_art_child, started_art_adult as started_art_adult ,started_art_total as started_art_total ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child as viral_load_done_child ,viral_load_done_adult as viral_load_done_adult ,viral_load_done_total as viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child as ipt_child ,ipt_adult as ipt_adult ,ipt_total as ipt_total ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child as test_child ,test_adult as test_adult   ,test_total as test_total , pmtct_hiv_pos_target,pmtct_hiv_pos as pmtct_hiv_pos, eid_target  , eid_done as eid_done, viral_load_mothers_target, viral_load_mothers_done as viral_load_mothers_done  from weekly_data_new join facility on weekly_data_new.facilityname=facility.facility_name ";
@@ -143,7 +160,7 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
 String query=" select facility.county,facility.subcounty,cur.facilityname, cur.startdate,cur.enddate, cur.hiv_pos_target_child,cur.hiv_pos_target_adult,cur.hiv_pos_target_total ,cur.hiv_pos_child as hiv_pos_child , cur.hiv_pos_adult as hiv_pos_adult  ,cur.hiv_pos_total as hiv_pos_total  ,cur.new_care_child as new_care_child ,cur.new_care_adult as new_care_adult ,cur.new_care_total as new_care_total  , cur.new_art_target_child  ,cur.new_art_target_adult  ,cur.new_art_target_total  ,cur.started_art_child as started_art_child, cur.started_art_adult as started_art_adult ,cur.started_art_total as started_art_total ,cur.viral_load_target_child  ,cur.viral_load_target_adult  ,cur.viral_load_target_total  ,cur.viral_load_done_child as viral_load_done_child ,cur.viral_load_done_adult as viral_load_done_adult ,cur.viral_load_done_total as viral_load_done_total  ,cur.ipt_target_child  ,cur.ipt_target_adult  ,cur.ipt_target_total  ,cur.ipt_child as ipt_child ,cur.ipt_adult as ipt_adult ,cur.ipt_total as ipt_total ,cur.testing_target_child  , cur.testing_target_adult  ,cur.testing_target_total  ,cur.test_child as test_child ,cur.test_adult as test_adult   ,cur.test_total as test_total , cur.pmtct_hiv_pos_target, cur.pmtct_hiv_pos as pmtct_hiv_pos, cur.eid_target  , cur.eid_done as eid_done, cur.viral_load_mothers_target, cur.viral_load_mothers_done as viral_load_mothers_done ,cur.hiv_pos_yield_perc_child  ,cur.hiv_pos_yield_perc_adult  ,cur.hiv_pos_yield_perc_all  ,cur.hiv_pos_care_perc_child  , cur.hiv_pos_care_perc_adult  , cur.hiv_pos_care_perc_all  , cur.started_art_perc_child  , cur.started_art_perc_adult  , cur.started_art_perc_all  , cur.viral_test_perc_child  , cur.viral_test_perc_adult , cur.viral_test_perc_all  , cur.ipt_done_perc_child  , cur.ipt_done_perc_adult  , cur.ipt_done_perc_all  , cur.tested_perc_child  , cur.tested_perc_adult  , cur.tested_perc_all  , cur.viral_load_mothers_perc, cur.eid_done_perc  , cur.pmtct_hiv_pos_perc  , cur.hiv_pos_yield_cmts  , cur.hiv_pos_care_cmts  , cur.started_art_cmts  , cur.viral_test_cmts  , cur.ipt_done_cmts  , cur.tested_cmts, cur.viral_load_mothers_cmts, cur.eid_done_cmts, cur.pmtct_hiv_pos_cmts   from weekly_data_new cur join facility on cur.facilityname=facility.facility_name where  "+where+" "+
 " and not exists ( select * from weekly_data_new high join facility on high.facilityname=facility.facility_name  where high.facilityname = cur.facilityname and high.enddate > cur.enddate and " +where+ ")";
 
-
+            System.out.println(""+query);
             try {
                 
                 conn.rs=conn.st.executeQuery(query);
@@ -232,7 +249,7 @@ String tested_cmts=null;
                 //reporting rate
                 int reportingrate=0;
                 
-                String getrates="select ROUND(((count(facilityname))/("+weeks+")*100)) as count from weekly_data_new where facilityname like '"+conn.rs.getString("facilityname")+"' and "+where+" ";
+                String getrates="select ROUND(((count(facilityname))/("+weeks+")*100)) as count from weekly_data_new where facilityname like '"+conn.rs.getString("facilityname")+"' and "+where1+" ";
                 
                 
                 conn.rs1=conn.st1.executeQuery(getrates);
@@ -255,6 +272,7 @@ String tested_cmts=null;
                 if(conn.rs1!=null){conn.rs1.close();}
                 if(conn.st!=null){conn.st.close();}
                 if(conn.st1!=null){conn.st1.close();}
+                if(conn.conne!=null){conn.conne.close();}
                 
         
             Date dat = new Date();

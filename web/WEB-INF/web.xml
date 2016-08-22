@@ -22,6 +22,10 @@
         <servlet-name>copytemplates</servlet-name>
         <servlet-class>code.copytemplates</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>mail</servlet-name>
+        <servlet-class>notification.mail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -41,6 +45,10 @@
     <servlet-mapping>
         <servlet-name>copytemplates</servlet-name>
         <url-pattern>/copytemplates</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>mail</servlet-name>
+        <url-pattern>/mail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>

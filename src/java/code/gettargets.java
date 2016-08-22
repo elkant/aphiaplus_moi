@@ -79,9 +79,10 @@ public class gettargets extends HttpServlet {
             
               if(conn.rs!=null){conn.rs.close();}
               if(conn.st!=null){conn.st.close();}
+              if(conn.conne!=null){conn.conne.close();}
             
             
-           System.out.println(""+jarr); 
+          // System.out.println(""+jarr); 
             
             try (PrintWriter out = response.getWriter()) {
                 
