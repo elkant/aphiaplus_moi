@@ -35,6 +35,8 @@ public class gettargets extends HttpServlet {
             
             dbConnweb conn= new dbConnweb();
             
+               conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200"); 
+               
            Calendar cal = Calendar.getInstance(); 
            int year=cal.get(Calendar.YEAR);
             int ordinalDay = cal.get(Calendar.DAY_OF_YEAR);

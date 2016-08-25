@@ -43,7 +43,7 @@ public final class dbConnweb {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
          conne = DriverManager.getConnection("jdbc:mysql://104.45.29.195:3306/aphiaplus_moi?maxAllowedPacket=1000000000","root", "admin");
          //conne = DriverManager.getConnection("jdbc:mysql://104.45.29.195:3306/aphiaplus_moi","root", "admin");
-         //conne = DriverManager.getConnection("jdbc:mysql://localhost:3306/aphiaplus_moi?maxAllowedPacket=1000000000","root", "70450289");
+        //conne = DriverManager.getConnection("jdbc:mysql://localhost:3306/aphiaplus_moi?maxAllowedPacket=1000000000","root", "70450289");
             
             //if the saved host name is less than 2 letters long, then thats not a genuine host name
 

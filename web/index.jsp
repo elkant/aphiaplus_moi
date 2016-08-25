@@ -16,6 +16,7 @@
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
                   <link href="css/dataTables.bootstrap.min.css" rel="stylesheet">
+                  <link href="css/jquery.dataTables.min.css" rel="stylesheet">
 		<link href="css/bootstrap.css" rel="stylesheet">
                 <link href="css/bootstrap-datepicker.min.css" rel="stylesheet">
                     <link rel="stylesheet" href="css/select2.min.css">
@@ -274,7 +275,7 @@
                                             UPDATE
                                         </button>
                                     
-                                        <button title="if you have selected  facility data for editing and you would like it saved as new instead of updating it, then click here" type="submit" id='savenewbutton' onclick="validateweeklydata();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
+                                        <button title="save current record as new and reserve the previous one you selected for editing" type="submit" id='savenewbutton' onclick="validateweeklydata();clearcommentsonly();" style="margin-left: 0%;display:none;" class="btn-lg btn-info active">
                                             SAVE AS NEW
                                         </button>
                                     </div>
@@ -328,7 +329,7 @@
                             </div>
                             
                             <div class="tab-pane well" id="searchdata">
-                                
+                                 <button id="btnDeleteRow" value="cancel">Delete selected Row</button>
                                 <div id="searchtablediv">
                                   
                                 </div>    
@@ -596,7 +597,7 @@
                  
     
     var hostname="http://104.45.29.195";
-   // var hostname="http://localhost";
+    //var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                  </script>
@@ -1814,14 +1815,26 @@ for(b=0;b<allindicatorsarray.length;b++){
 
 function clearcmtsandprcent(){
     
+   clearcommentsonly();
+   clearpercentsonly();
+    
+}
+
+function clearpercentsonly(){
        //clear progress bar hidden fields too
    
   for(b=0;b<allprogressbar_hiddentext_array.length;b++){
     
   $("#"+allprogressbar_hiddentext_array[b]).val("");  
     
-} 
-       
+}  
+    
+}
+
+
+function clearcommentsonly(){
+    
+        
        //comnts
  
      for(b=0;b<allcommentsarray.length;b++){
@@ -1831,6 +1844,8 @@ function clearcmtsandprcent(){
                                             }//end of for loop 
     
 }
+
+
 
 var dbdata="";
 
@@ -1857,14 +1872,14 @@ function selectsearchdata()
               //how to reference each column 
               //alert(dat.doc.startdate);
               //dat.doc._id
-              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>";
+              var statusicon="<i class='glyphicon glyphicon-cloud-upload' style='color:red;' title='data not exported'></i>*";
               if(dat.doc.syncstatus==="Yes"){
                  statusicon=""; 
                   
               }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
-		 dbdata+="<tr><td> "+dat.doc.enddate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
+		 dbdata+="<tr id='"+dat.doc._id+"'><td> "+dat.doc.enddate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
           	    } //end of for loop
                     
 	appendtabledata(dbdata);
@@ -1893,12 +1908,49 @@ function appendtabledata( dbdata ){
          
 	   $(document).ready(function() {
                 
-          $('#searchtable').DataTable({              
+         /* $('#searchtable').DataTable({              
               "autoWidth": true,
               "paging": true,
               "pagingType": "full",
-              "lengthChange": false,                     
-          });
+              "lengthChange": false,  "order": [[0,'desc']]                    
+          }).makeEditable({sDeleteURL: "js/deleterecords.js"});
+          **/
+          //new code
+          
+     
+    var table = $('#searchtable').DataTable({"autoWidth": true,
+              "paging": true,
+              "pagingType": "full",
+              "lengthChange": false,  
+              "order": [[0,'desc']]});
+ 
+    $('#searchtable tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } );
+ 
+    $('#btnDeleteRow').click( function () {
+        
+     var tablerowid=table.$('tr.selected').attr('id');
+        
+        if(ConfirmDelete()===true){
+        
+        deletedata(tablerowid);
+        
+        table.row('.selected').remove().draw( false );
+    }
+        //call the delete function now
+    } );
+
+          
+          
+          
+          
             
                                      } ); 
     
@@ -3233,12 +3285,49 @@ function checkids(){
         else if(newid!==id){
         //hide the save as new 
         $("#savenewbutton").show();
+        $("#updatebutton").hide();
         
                            } 
                   
         }
                  }
 
+
+//confirm delete data
+
+
+function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete data for the selected facility?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
+
+
+
+
+
+
+
+
+function deletedata(id){
+    
+    //a function to delete entered data
+console.log("______"+id);
+weeklydatadb.get(id).then(function(doc) {
+  return weeklydatadb.remove(doc);
+}).then(function (result) {
+    unsynceddata();
+  // handle result
+}).catch(function (err) {
+  console.log(err);
+});
+
+  
+    
+}
 
 </script>
 

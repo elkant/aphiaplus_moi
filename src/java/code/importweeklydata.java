@@ -28,6 +28,7 @@ public class importweeklydata extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
           String insert="";
+          String myresponse="";
 String user=null;        
         response.setContentType("text/html;charset=UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -227,10 +228,16 @@ tested_cmts=request.getParameter("tested_cmts");
            
            
           
+          //set maxconnection
+
+
            
-           
-         
-              
+            conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200");
+            conn.rs = conn.st.executeQuery("SHOW VARIABLES LIKE 'max_allowed_packet' ");
+            if (conn.rs.next()) {
+                System.out.println("Max_allowed_connection_" + conn.rs.getString(2));
+
+            }            
                   
            String checkexisting="select id from weekly_data_new where id  like '"+id+"' and user='"+user+"'"; 
            //String checkexisting="select id from weekly_data_new where id='"+id+"' "; 
@@ -353,7 +360,7 @@ tested_cmts=request.getParameter("tested_cmts");
                         }
    
    
-                       System.out.println(" update weekly_data_new set facilityname='"+facilityname+"', startdate='"+startdate+"', enddate='"+enddate+"', hiv_pos_target_child='"+hiv_pos_target_child+"' ,hiv_pos_target_adult='"+hiv_pos_target_adult+"' ,hiv_pos_target_total='"+hiv_pos_target_total+"' ,hiv_pos_child='"+hiv_pos_child+"' , hiv_pos_adult='"+hiv_pos_adult+"' "
+                     myresponse= " update weekly_data_new set facilityname='"+facilityname+"', startdate='"+startdate+"', enddate='"+enddate+"', hiv_pos_target_child='"+hiv_pos_target_child+"' ,hiv_pos_target_adult='"+hiv_pos_target_adult+"' ,hiv_pos_target_total='"+hiv_pos_target_total+"' ,hiv_pos_child='"+hiv_pos_child+"' , hiv_pos_adult='"+hiv_pos_adult+"' "
                  + " ,hiv_pos_total='"+hiv_pos_total+"' ,new_care_child='"+new_care_child+"' ,new_care_adult='"+new_care_adult+"' ,new_care_total='"+new_care_total+"' ,new_art_target_child='"+new_art_target_child+"' ,new_art_target_adult='"+new_art_target_adult+"' ,new_art_target_total='"+new_art_target_total+"' ,started_art_child='"+started_art_child+"' "
                  + " ,started_art_adult='"+started_art_adult+"' ,started_art_total='"+started_art_total+"' ,viral_load_target_child='"+viral_load_target_child+"' ,viral_load_target_adult='"+viral_load_target_adult+"' ,viral_load_target_total='"+viral_load_target_total+"' ,viral_load_done_child='"+viral_load_done_child+"' "
                  + " ,viral_load_done_adult='"+viral_load_done_adult+"' ,viral_load_done_total='"+viral_load_done_total+"' ,ipt_target_child='"+ipt_target_child+"' ,ipt_target_adult='"+ipt_target_adult+"' ,ipt_target_total='"+ipt_target_total+"' ,ipt_child='"+ipt_child+"' ,ipt_adult='"+ipt_adult+"' ,ipt_total='"+ipt_total+"' "
@@ -364,7 +371,8 @@ tested_cmts=request.getParameter("tested_cmts");
                  + " ,viral_test_perc_all='"+viral_test_perc_all+"' ,ipt_done_perc_child='"+ipt_done_perc_child+"' ,ipt_done_perc_adult='"+ipt_done_perc_adult+"' ,ipt_done_perc_all='"+ipt_done_perc_all+"' ,tested_perc_child='"+tested_perc_child+"' ,tested_perc_adult='"+tested_perc_adult+"' ,tested_perc_all='"+tested_perc_all+"' "
                  + " ,hiv_pos_yield_cmts='"+hiv_pos_yield_cmts+"' ,hiv_pos_care_cmts='"+hiv_pos_care_cmts+"' ,started_art_cmts='"+started_art_cmts+"' ,viral_test_cmts='"+viral_test_cmts+"' ,ipt_done_cmts='"+ipt_done_cmts+"' ,tested_cmts='"+tested_cmts+"',viral_load_mothers_perc='"+viral_load_mothers_perc+"',eid_done_perc='"+eid_done_perc+"' "
                  + " ,pmtct_hiv_pos_perc='"+pmtct_hiv_pos_perc+"'  ,viral_load_mothers_cmts='"+viral_load_mothers_cmts+"' ,eid_done_cmts='"+eid_done_cmts+"',pmtct_hiv_pos_cmts='"+pmtct_hiv_pos_cmts+"' "
-                 + " where id='"+id+"' ");
+                 + " where id='"+id+"' ";
+                      System.out.println(myresponse);
                         
    
    }
@@ -372,7 +380,7 @@ tested_cmts=request.getParameter("tested_cmts");
    {
    //do insert code here
    
-       System.out.println("insert into weekly_data_new"
+      myresponse="insert into weekly_data_new"
   + "( id,facilityname,startdate,enddate, hiv_pos_target_child  ,hiv_pos_target_adult  ,hiv_pos_target_total ,hiv_pos_child , hiv_pos_adult   ,hiv_pos_total  ,new_care_child  ,new_care_adult  ,new_care_total  ,new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child ,started_art_adult  ,started_art_total  ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child  ,viral_load_done_adult  ,viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child  ,ipt_adult  ,ipt_total  ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child  ,test_adult  ,test_total , pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done,viral_load_mothers_target,viral_load_mothers_done,user ,hiv_pos_yield_perc_child  ,hiv_pos_yield_perc_adult  ,hiv_pos_yield_perc_all  ,hiv_pos_care_perc_child  ,hiv_pos_care_perc_adult  , hiv_pos_care_perc_all  ,started_art_perc_child  ,started_art_perc_adult  ,started_art_perc_all  ,viral_test_perc_child  ,viral_test_perc_adult ,viral_test_perc_all  ,ipt_done_perc_child  ,ipt_done_perc_adult  ,ipt_done_perc_all  ,tested_perc_child  ,tested_perc_adult  ,tested_perc_all  ,hiv_pos_yield_cmts  ,hiv_pos_care_cmts  ,started_art_cmts  ,viral_test_cmts  ,ipt_done_cmts  ,tested_cmts,viral_load_mothers_perc,eid_done_perc  ,pmtct_hiv_pos_perc  ,viral_load_mothers_cmts,eid_done_cmts,pmtct_hiv_pos_cmts  ) "
 + " values ('"+id+"','"+facilityname+"','"+startdate+"','"+enddate+"','"+hiv_pos_target_child+"','"+hiv_pos_target_adult+"','"+hiv_pos_target_total+"','"+hiv_pos_child+"','"+hiv_pos_adult+"',"
   + "'"+hiv_pos_total+"','"+new_care_child+"','"+new_care_adult+"','"+new_care_total+"','"+new_art_target_child+"','"+new_art_target_adult+"','"+new_art_target_total+"','"+started_art_child+"',"
@@ -382,7 +390,8 @@ tested_cmts=request.getParameter("tested_cmts");
          + "'"+viral_load_mothers_done+"','"+user+"','"+hiv_pos_yield_perc_child+"','"+hiv_pos_yield_perc_adult+"','"+hiv_pos_yield_perc_all+"','"+hiv_pos_care_perc_child+"','"+hiv_pos_care_perc_adult+"',"
          + "'"+hiv_pos_care_perc_all+"','"+started_art_perc_child+"','"+started_art_perc_adult+"','"+started_art_perc_all+"','"+viral_test_perc_child+"','"+viral_test_perc_adult+"','"+viral_test_perc_all+"',"
          + "'"+ipt_done_perc_child+"','"+ipt_done_perc_adult+"','"+ipt_done_perc_all+"','"+tested_perc_child+"','"+tested_perc_adult+"','"+tested_perc_all+"','"+hiv_pos_yield_cmts+"','"+hiv_pos_care_cmts+"',"
-         + "'"+started_art_cmts+"','"+viral_test_cmts+"','"+ipt_done_cmts+"','"+tested_cmts+"','"+viral_load_mothers_perc+"','"+eid_done_perc+"','"+pmtct_hiv_pos_perc+"','"+viral_load_mothers_cmts+"','"+eid_done_cmts+"','"+pmtct_hiv_pos_cmts+"')");                   
+         + "'"+started_art_cmts+"','"+viral_test_cmts+"','"+ipt_done_cmts+"','"+tested_cmts+"','"+viral_load_mothers_perc+"','"+eid_done_perc+"','"+pmtct_hiv_pos_perc+"','"+viral_load_mothers_cmts+"','"+eid_done_cmts+"','"+pmtct_hiv_pos_cmts+"')";
+      System.out.println(myresponse);                   
             
          
        
@@ -497,7 +506,7 @@ tested_cmts=request.getParameter("tested_cmts");
         //send an email at this point of the exception
             
             try {
-                sm.Sendemail("MOIS IMPORT",ex.toString()+ "___ \n Username: "+user+" \n"+insert, "MYSQL IMPORTING ERROR ","EKaunda@fhi360.org");
+                sm.Sendemail("MOIS IMPORT",ex.toString()+ "___ \n Username: "+user+" Facility name: \n "+facilityname+" \n "+myresponse, "MYSQL IMPORTING ERROR ","EKaunda@fhi360.org");
                 } catch (MessagingException ex1) {
                 Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex1);
             }

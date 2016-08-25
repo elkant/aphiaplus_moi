@@ -151,6 +151,13 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
             
             dbConnweb conn= new dbConnweb();
             
+            conn.st.executeUpdate("SET GLOBAL max_allowed_packet = 209715200");
+            conn.rs = conn.st.executeQuery("SHOW VARIABLES LIKE 'max_allowed_packet' ");
+            if (conn.rs.next()) {
+                System.out.println("Generating report | Max_allowed_connection_" + conn.rs.getString(2));
+
+            }
+            
             String where=" (enddate between '"+startdate+"' and '"+enddate+"')  "+countywhere+"  ";      
             String where1=" (enddate between '"+startdate+"' and '"+enddate+"') ";      
             
@@ -311,6 +318,8 @@ String tested_cmts=null;
 
 
                                                      } catch (InvalidFormatException ex) {
+            Logger.getLogger(excelreport.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
             Logger.getLogger(excelreport.class.getName()).log(Level.SEVERE, null, ex);
         }
         
