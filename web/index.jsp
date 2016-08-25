@@ -595,8 +595,8 @@
                     
                  
     
-    //var hostname="http://104.45.29.195";
-    var hostname="http://localhost";
+    var hostname="http://104.45.29.195";
+   // var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                  </script>
