@@ -184,7 +184,10 @@ test_total=request.getParameter("test_total");
  viral_load_mothers_done=request.getParameter("viral_load_mothers_done");
  timestamp=request.getParameter("timestamp");
  user=request.getParameter("user");
-         
+ String usermail=""; 
+ if(user.contains("@") && (user.contains(".com") || user.contains(".org")  )){usermail=","+user;}
+ 
+        
           viral_load_mothers_perc=request.getParameter("viral_load_mothers_perc");
           eid_done_perc=request.getParameter("eid_done_perc");
            pmtct_hiv_pos_perc=request.getParameter("pmtct_hiv_pos_perc");
@@ -351,7 +354,7 @@ tested_cmts=request.getParameter("tested_cmts");
                         if(conn.pst1.executeUpdate()==1)
                         {    
                             txtresponse="<font color='green'> Data for <b> "+facilityname+" </b> updated succesfully for dates "+startdate+" to "+enddate+" </font>";
-                             sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org");
+                             sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
                              
                         }
                         else 
@@ -482,7 +485,7 @@ tested_cmts=request.getParameter("tested_cmts");
                             txtresponse="<font color='green'> Data for "+facilityname+" added succesfully for dates "+startdate+" to "+enddate+" </font>";
                            
                             //add team leaders variable at this point 
-                            sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org");
+                            sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
                                                         } 
                         else {
                             

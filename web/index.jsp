@@ -26,6 +26,13 @@
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<link href="css/styles.css" rel="stylesheet">
+                
+                <style>
+input:focus {
+    border-color: red;
+}
+</style>
+                
 	</head>
 	<body>
 <!-- header -->
@@ -68,7 +75,10 @@
     
 </div>
 <!-- /Header -->
-
+     <div class="well well-sm" >
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+   <strong>Note!</strong> Targets have been hidden from the screen. To show targets for each site, un check the button besides. <b>Show targets </b> <input type="checkbox" onclick="togglehidding();" checked id="hidetargets" />
+  </div>
 <!-- Main -->
 <div class="container-fluid">
     <div class="row">
@@ -80,7 +90,8 @@
             
           <h5 style="text-align: center;color:blue;">Matching Order Indicators system version 1.1.0 </h5>
 
-          
+      
+      
   
 
             <div class="row">
@@ -596,8 +607,8 @@
                     
                  
     
-    var hostname="http://104.45.29.195";
-    //var hostname="http://localhost";
+    //var hostname="http://104.45.29.195";
+  var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                  </script>
@@ -1145,7 +1156,7 @@ var test_total=null;
      var allindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
-     
+     var hidetargetsui='yes';
 function createdynamicinputs(){
     
     
@@ -1153,7 +1164,7 @@ function createdynamicinputs(){
          
        
    
-         $.getJSON("indicators.json",function(result){
+         $.getJSON("indicators1.json",function(result){
              var table="";
              var row1="";
              var row2="";
@@ -1169,8 +1180,9 @@ function createdynamicinputs(){
              var minimum=result[a].Min;
              var maximum=result[a].Max;
              var onblur="";
+             var onkey_up="autocalculate('"+indicatorid+"');";
              if(result[a].onblur!==null){
-                 onblur=result[a].onblur;
+                 onblur="autocalculate('"+indicatorid+"');"+result[a].onblur;
              }
              var onkeypress=result[a].onkeypress;
              var tdclass=result[a].tdclass;
@@ -1190,10 +1202,18 @@ function createdynamicinputs(){
              if(label==='Total' && tdclass==='col-xs-4' ){  }
              if(isnewrow===1)
              {
-               
+                 //dont show targets 
+               if(hidetargetsui==='yes' && readonlyvar==="TRUE"  ){
+                 row1="<tr class='hiderows' style='display:none;'> <td class='col-xs-12' colspan='3'> <div class='control-group'> <label  > <font color='red'> <b> * </b> </font> <span class='badge'> "+count+" </span>     "+indicatorname+"    <span class='badge' title='Indicator' data-toggle='popover' data-trigger='hover' data-content='"+fullindicator+"'>?</span> </label>  </div> </td> </tr>";
+                 count++;
+                 row2+=row1;   
+                   
+               }
+               else {
                  row1="<tr> <td class='col-xs-12' colspan='3'> <div class='control-group'> <label  > <font color='red'> <b> * </b> </font> <span class='badge'> "+count+" </span>     "+indicatorname+"    <span class='badge' title='Indicator' data-toggle='popover' data-trigger='hover' data-content='"+fullindicator+"'>?</span> </label>  </div> </td> </tr>";
                  count++;
                  row2+=row1;
+             }
              }
              else{
                  
@@ -1201,15 +1221,32 @@ function createdynamicinputs(){
              }
               if(isnewrow===1 && count===2)
              {
-             row2+=" <tr> ";
+               if(hidetargetsui==='yes' && readonlyvar==="TRUE"  ){
+                     row2+=" <tr class='hiderows' style='display:none;'> ";   
+               }   
+               else {
+                   
+                     row2+=" <tr> ";   
+                   
+               }
+                 
+        
               }
               else  if(isnewrow===1 && count > 2 && count<result.length){
-              row2+=" </tr> <tr> ";    
+                  
+                   if(hidetargetsui==='yes' && readonlyvar==="TRUE"  ){
+                         row2+=" </tr> <tr class='hiderows' style='display:none;'> "; 
+                       } else {
+                           
+                        row2+=" </tr> <tr> ";      
+                   }
+                  
+               
                   
               }
               
               
-              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);' "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\" type='"+inputtype+"' min ='"+minimum+"' max='"+maximum+"'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
+              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);'  "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\"  onfocus='this.value = this.value;' type='text' min ='"+minimum+"' max='"+maximum+"' maxlength='7'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
             //IndicatorID	Age	IndicatorName	Level	datainputtype	Min	Max	onblur	onkeypress	Class	Required
     
      
@@ -3109,10 +3146,22 @@ isuseradded();
 
 
    function numbers(evt){
-var charCode=(evt.which) ? evt.which : event.keyCode
-if(charCode > 31 && (charCode < 48 || charCode>57))
+      
+var charCode=(evt.which) ? evt.which : evt.keyCode
+ console.log(charCode);
+ /*
+if(charCode > 31 && (charCode < 48 || charCode>57)){
 return false;
-return true;
+}
+*/
+//43=+  9=TAB 8=BACKSPACE 
+ if( charCode===43 ||  charCode===9 ||  charCode===8 || charCode===46 || ( charCode >= 48 && charCode<=57)){
+    
+ return true;   
+}
+else {
+return false;
+}
 }
 
 //Codes to prevent default form submission
@@ -3328,6 +3377,64 @@ weeklydatadb.get(id).then(function(doc) {
   
     
 }
+
+
+
+function togglehidding(){
+    
+  console.log("hidding called"); 
+ if($('#hidetargets:checkbox:checked').length > 0){
+  //showtargets 
+
+   $(".hiderows").hide();
+   hidetargetsui='yes';
+ }
+ else 
+ {
+      $(".hiderows").show();
+      hidetargetsui='no';
+ }
+    
+}
+
+
+
+
+
+
+
+
+// a function to autosum
+
+
+
+function autocalculate(indicator){
+    var calculation=$("#"+indicator).val();
+   // var calculation=document.getElementById(indicator).value;
+ 
+    console.log(calculation);
+    //var calculation1=calculation.replace("+","@");
+    var sourcearray=calculation.split("+");
+  //___
+    var total=0;
+          
+    for(b=0;b<sourcearray.length;b++){
+        //check if there
+        if(sourcearray[b].trim()===''){sourcearray[b]=0;}
+        
+        if(sourcearray[b]!=='')
+        {
+           total=parseInt(total)+parseInt(sourcearray[b]); 
+           $("#"+indicator).val(total);
+           console.log("Total___"+total);
+        }
+                                               
+        
+    }
+   
+}//end of auto calculate
+
+
 
 </script>
 

@@ -1,9 +1,9 @@
 CACHE MANIFEST
-# 2016-08-25 v7.0.26
+# 2016-09-05 v9.2.10
 
 progressbar.json
 logo.png
-indicators.json
+indicators1.json
 css/dataTables.bootstrap.min.css
 css/jquery.dataTables.min.css
 css/bootstrap.css
