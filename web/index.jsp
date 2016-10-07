@@ -88,7 +88,7 @@ input:focus {
 
             
             
-          <h5 style="text-align: center;color:blue;">Matching Order Indicators system version 1.1.0 </h5>
+          <h5 style="text-align: center;color:blue;">Matching Order Indicators system version 2.0.0 </h5>
 
       
       
@@ -155,7 +155,7 @@ input:focus {
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Week Beginning </label>
                                     <div class="controls">
-                                        <input type="text" onchange="checkids();" name ="startdate" id="startdate" data-date-end-date="0d" class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                        <input type="text" onchange="checkids();" name ="startdate" id="startdate" data-date-end-date="0d" autocomplete="off" class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
                                         <input type="hidden"  name ="rowid" id="rowid"  />
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ input:focus {
                                    <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Week Ending </label>
                                     <div class="controls">
-                                        <input type="text" onchange="checkids();" name="enddate" id="enddate" data-date-end-date="0d"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
+                                        <input type="text" onchange="checkids();settargets();" onblur="" name="enddate" id="enddate" data-date-end-date="0d" autocomplete="off"  class="form-control dates" readonly placeholder="e.g yyyy-mm-dd">
                                     </div>
                                 </div>
                                         
@@ -195,7 +195,7 @@ input:focus {
                                   <div class="control-group">
                                     <label> <font color="red"><b>*</b></font>  Facility Name:</label>
                                     <div class="controls">
-                                        <select  onchange="showreports();settargets(this);checkids();"   name="facilityname" id="facilityname" class="form-control" >
+                                        <select  onchange="showreports();settargets();checkids();"   name="facilityname" id="facilityname" class="form-control" >
                                             <option>Select Facility Name</option>
                                            
                                         </select>
@@ -816,11 +816,7 @@ function showfacils(){
  
       cnt++;
 	   //console.log(doc);
-	   for(a=0;a<
-                   
-                
-                
-                doc.total_rows;a++){
+	   for(a=0;a<doc.total_rows;a++){
 	   var dat={};
 	   dat=doc.rows[a];
 	      //console.log(dat.doc.title);
@@ -992,7 +988,7 @@ var weeklydata;
 function insertweeklydata(id,facility,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total ,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) {
    
         weeklydata = {
-        _id: id, //made of startdate_enddate_facilitymfl
+        _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
 	facility:facility,
         startdate:startdate,
 	enddate:enddate,
@@ -1111,49 +1107,92 @@ viral_load_mothers_perc:$("#viral_load_mothers_perc_in").val(),
 var hiv_pos_target_child=null;
 var hiv_pos_target_adult=null;
 var hiv_pos_target_total=null;
+
 var hiv_pos_child=null;
 var hiv_pos_adult=null;
 var hiv_pos_total=null;
+
+var hiv_pos_child_w=null;
+var hiv_pos_adult_w=null;
+var hiv_pos_total_w=null;
+
 var new_care_child=null;
 var new_care_adult=null;
 var new_care_total=null;
+
+var new_care_child_w=null;
+var new_care_adult_w=null;
+var new_care_total_w=null;
+
 var new_art_target_child=null;
 var new_art_target_adult=null;
 var new_art_target_total=null;
+
+var started_art_child_w=null;
+var started_art_adult_w=null;
+var started_art_total_w=null;
+
 var started_art_child=null;
 var started_art_adult=null;
 var started_art_total=null;
+
 var viral_load_target_child=null;
 var viral_load_target_adult=null;
 var viral_load_target_total=null;
+
 var viral_load_done_child=null;
 var viral_load_done_adult=null;
 var viral_load_done_total=null;
+
+var viral_load_done_child_w=null;
+var viral_load_done_adult_w=null;
+var viral_load_done_total_w=null;
+
 var ipt_target_child=null;
 var ipt_target_adult=null;
 var ipt_target_total=null;
+
 var ipt_child=null;
 var ipt_adult=null;
 var ipt_total=null;
+
+var ipt_child_w=null;
+var ipt_adult_w=null;
+var ipt_total_w=null;
+
 var testing_target_child=null;
 var testing_target_adult=null;
 var testing_target_total=null;
+
 var test_child=null;
 var test_adult=null;
 var test_total=null;
+
+var test_child_w=null;
+var test_adult_w=null;
+var test_total_w=null;
    
    var pmtct_hiv_pos_target=null;
+   
    var pmtct_hiv_pos=null;
+   var pmtct_hiv_pos_w=null;
+   
    var eid_target=null;
+   
    var eid_done=null;
+   var eid_done_w=null;
+   
    var viral_load_mothers_target=null;
+   
    var viral_load_mothers_done=null;
+   var viral_load_mothers_done_w=null;
    
    
    
    //added 201605 
     var progressbarstoskip=[];
      var allindicatorsarray=[];
+     var allnontargetindicatorsarray=[];
      var allcommentsarray=[];
      var allprogressbar_hiddentext_array=[];
      var hidetargetsui='yes';
@@ -1191,6 +1230,11 @@ function createdynamicinputs(){
              var readonlyvar=result[a].readonly;
              var isreadonly="";
              allindicatorsarray.push(indicatorid);
+             
+             if(indicatorid.indexOf("target")===-1){
+                 
+              allnontargetindicatorsarray.push(indicatorid);   
+             }
               var tabindex="";
              if(readonlyvar==="TRUE"){
                  
@@ -1235,7 +1279,9 @@ function createdynamicinputs(){
               else  if(isnewrow===1 && count > 2 && count<result.length){
                   
                    if(hidetargetsui==='yes' && readonlyvar==="TRUE"  ){
+                       
                          row2+=" </tr> <tr class='hiderows' style='display:none;'> "; 
+                         
                        } else {
                            
                         row2+=" </tr> <tr> ";      
@@ -1246,7 +1292,7 @@ function createdynamicinputs(){
               }
               
               
-              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);'  "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\"  onfocus='this.value = this.value;' type='text' min ='"+minimum+"' max='"+maximum+"' maxlength='7'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
+              row2+="<td class='"+tdclass+"' colspan='"+colspan+"' > <div class='control-group' > <label> "+label+" </label> <div class='controls'> <input onkeypress='return numbers(event);'  "+isreadonly+"  "+tabindex+" onblur=\""+onblur+"\"  onfocus='this.value = this.value;' type='text' min ='"+minimum+"' max='"+maximum+"' maxlength='7' data-"+indicatorid+"='0' data-previous_"+indicatorid+"='0'  name='"+indicatorid+"' id='"+indicatorid+"' class='form-control'> </div> </div> </td> ";
             //IndicatorID	Age	IndicatorName	Level	datainputtype	Min	Max	onblur	onkeypress	Class	Required
     
      
@@ -1354,7 +1400,11 @@ function sumofindicators(sourceindicators,destinationindicator){
         
             $("#"+destinationelement).val(total);
             }
-                                               
+        if(b===(sourceindicatorsarray.length-1)){
+        
+            yearlytotal(destinationindicator);    
+            
+        }                                       
         }
                                               
                                              
@@ -1365,18 +1415,47 @@ function sumofindicators(sourceindicators,destinationindicator){
 
 //=========================================set targets================================
 
-function settargets(facilitymfl){
+//function settargets(facilitymfl){
+function settargets(){
     
-    var receivedvalues=facilitymfl.value;
+    var cur_enddate=$("#enddate").val();
+    var targetyear='2016';
+     var receivedvalues=$("#facilityname").val();
+    if(cur_enddate!=='' && receivedvalues!==''){
+       //call the loader for lastly entered data
+       
+       var allfacs=receivedvalues.split("-");
+       seachlastcumulative(allfacs[1],cur_enddate);
+            
+        var datearray=cur_enddate.split("-");
+        var datekey= cur_enddate.replace(/-/g,""); 
+       
+        if(parseInt(datearray[1])>=10)
+        {
+            //the year is curyear plus one
+           targetyear=parseInt(datearray[0])+parseInt(1); 
+            
+        }
+        else {
+            
+          targetyear=parseInt(datearray[0]);  
+            
+        }
+   
+    
+        console.log("target year is "+targetyear);
+        
+    
+   
     
     var receivedvals=receivedvalues.split("_");
     
   
   var dateobject = new Date();
-var currentyear = dateobject.getFullYear(); 
+//var currentyear = dateobject.getFullYear(); 
 var targetsfound=0;
   
-    targetsdb.get(receivedvals[0]+'_'+currentyear).then(function (doc) {
+    targetsdb.get(receivedvals[0]+'_'+targetyear).then(function (doc) {
         
   //doc.age = 4;
  //dat.doc.hiv_pos_target_child
@@ -1407,8 +1486,12 @@ $("#viral_load_mothers_target").val(Math.round(parseInt(doc.viral_load_mothers_t
 
                                     
 }).catch(function (err){
-    console.log("no data found");
-    $("#hiv_pos_target_child").val("");
+    
+console.log("no data found "+err);
+
+alert("no targets available for the selected facility and year");
+
+$("#hiv_pos_target_child").val("");
 $("#hiv_pos_target_adult").val("");
 $("#hiv_pos_target_total").val("");
 $("#new_art_target_child").val("");
@@ -1429,7 +1512,9 @@ $("#viral_load_mothers_target").val("");
     
 }); 
     
-    
+ }//end of checking if there is a blank  
+
+
 }
 
 
@@ -1447,37 +1532,71 @@ startdate=$("#startdate").val();
 enddate=$("#enddate").val(); 
      
  //added 201606   
-    
+   //alert( $("#hiv_pos_child").attr("data-hiv_pos_child")); 
 hiv_pos_target_child=$("#hiv_pos_target_child").val();
 hiv_pos_target_adult=$("#hiv_pos_target_adult").val();
 hiv_pos_target_total=$("#hiv_pos_target_total").val();
+
+hiv_pos_child_w=$("#hiv_pos_child").attr("data-hiv_pos_child");
+hiv_pos_adult_w=$("#hiv_pos_adult").attr("data-hiv_pos_adult");
+hiv_pos_total_w=$("#hiv_pos_total").attr("data-hiv_pos_total");
+
 hiv_pos_child=$("#hiv_pos_child").val();
 hiv_pos_adult=$("#hiv_pos_adult").val();
 hiv_pos_total=$("#hiv_pos_total").val();
+
+new_care_child_w=$("#new_care_child").attr("data-new_care_child");
+new_care_adult_w=$("#new_care_adult").attr("data-new_care_adult");
+new_care_total_w=$("#new_care_total").attr("data-new_care_total");
+
 new_care_child=$("#new_care_child").val();
 new_care_adult=$("#new_care_adult").val();
 new_care_total=$("#new_care_total").val();
+
 new_art_target_child=$("#new_art_target_child").val();
 new_art_target_adult=$("#new_art_target_adult").val();
 new_art_target_total=$("#new_art_target_total").val();
+
+started_art_child_w=$("#started_art_child").attr("data-started_art_child");
+started_art_adult_w=$("#started_art_adult").attr("data-started_art_adult");
+started_art_total_w=$("#started_art_total").attr("data-started_art_total");
+
 started_art_child=$("#started_art_child").val();
 started_art_adult=$("#started_art_adult").val();
 started_art_total=$("#started_art_total").val();
+
 viral_load_target_child=$("#viral_load_target_child").val();
 viral_load_target_adult=$("#viral_load_target_adult").val();
 viral_load_target_total=$("#viral_load_target_total").val();
+
+viral_load_done_child_w=$("#viral_load_done_child").attr("data-viral_load_done_child");
+viral_load_done_adult_w=$("#viral_load_done_adult").attr("data-viral_load_done_adult");
+viral_load_done_total_w=$("#viral_load_done_total").attr("data-viral_load_done_total");
+
 viral_load_done_child=$("#viral_load_done_child").val();
 viral_load_done_adult=$("#viral_load_done_adult").val();
 viral_load_done_total=$("#viral_load_done_total").val();
+
 ipt_target_child=$("#ipt_target_child").val();
 ipt_target_adult=$("#ipt_target_adult").val();
 ipt_target_total=$("#ipt_target_total").val();
+
+ipt_child_w=$("#ipt_child").attr("data-ipt_child");
+ipt_adult_w=$("#ipt_adult").attr("data-ipt_adult");
+ipt_total_w=$("#ipt_total").attr("data-ipt_total");
+
 ipt_child=$("#ipt_child").val();
 ipt_adult=$("#ipt_adult").val();
 ipt_total=$("#ipt_total").val();
+
 testing_target_child=$("#testing_target_child").val();
 testing_target_adult=$("#testing_target_adult").val();
 testing_target_total=$("#testing_target_total").val();
+
+test_child_w=$("#test_child").attr("data-test_child");
+test_adult_w=$("#test_adult").attr("data-test_adult");
+test_total_w=$("#test_total").attr("data-test_total");
+
 test_child=$("#test_child").val();
 test_adult=$("#test_adult").val();
 test_total=$("#test_total").val();
@@ -1485,10 +1604,18 @@ test_total=$("#test_total").val();
     
    
     pmtct_hiv_pos_target=$("#pmtct_hiv_pos_target").val();
+    
+    pmtct_hiv_pos_w=$("#pmtct_hiv_pos").attr("data-pmtct_hiv_pos");
     pmtct_hiv_pos=$("#pmtct_hiv_pos").val();
+    
     eid_target=$("#eid_target").val();
+    
+    eid_done_w=$("#eid_done").attr("data-eid_done");
     eid_done=$("#eid_done").val();
+    
     viral_load_mothers_target=$("#viral_load_mothers_target").val();
+    
+    viral_load_mothers_done_w=$("#viral_load_mothers_done").attr("data-viral_load_mothers_done");
     viral_load_mothers_done=$("#viral_load_mothers_done").val();
     
     
@@ -1801,7 +1928,12 @@ test_total=$("#test_total").val();
       
      var facilityname=facilitynameandmfl[1];
             //save data to the db
-          insertweeklydata(id,facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total ,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) ;
+            //we are now saving both weekly totals and annual cumulatives on the db
+            //add a variable to distinguish the two
+            //use _wk
+          insertweeklydata(id+"_weekly",facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child_w,hiv_pos_adult_w,hiv_pos_total_w,new_care_child_w,new_care_adult_w,new_care_total_w,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child_w,started_art_adult_w,started_art_total_w,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child_w,viral_load_done_adult_w,viral_load_done_total_w,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child_w,ipt_adult_w,ipt_total_w,testing_target_child,testing_target_adult,testing_target_total,test_child_w,test_adult_w,test_total_w,pmtct_hiv_pos_target,pmtct_hiv_pos_w,eid_target,eid_done_w,viral_load_mothers_target,viral_load_mothers_done_w,timestamp,user, syncstatus) ;
+          insertweeklydata(id+"_annual",facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total ,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done,viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) ;
+          console.log(id+"@"+facilityname+"@"+startdate+"@"+enddate+"@"+ hiv_pos_target_child+"@"+hiv_pos_target_adult+"@"+hiv_pos_target_total+"@"+hiv_pos_child+"@"+hiv_pos_adult+"@"+hiv_pos_total+"@"+new_care_child+"@"+new_care_adult+"@"+new_care_total+"@"+new_art_target_child+"@"+new_art_target_adult+"@"+new_art_target_total+"@"+started_art_child+"@"+started_art_adult+"@"+started_art_total+"@"+viral_load_target_child+"@"+viral_load_target_adult+"@"+viral_load_target_total+"@"+viral_load_done_child+"@"+viral_load_done_adult+"@"+viral_load_done_total+"@"+ipt_target_child+"@"+ipt_target_adult+"@"+ipt_target_total+"@"+ipt_child+"@"+ipt_adult+"@"+ipt_total+"@"+testing_target_child+"@"+testing_target_adult+"@"+testing_target_total+"@"+test_child+"@"+test_adult+"@"+test_total +"@"+pmtct_hiv_pos_target+"@"+pmtct_hiv_pos+"@"+eid_target+"@"+eid_done+"@"+viral_load_mothers_target+"@"+viral_load_mothers_done+"@"+timestamp+"@"+user+"@"+ syncstatus) ;
 
 clearweeklyfields();
 
@@ -1844,6 +1976,15 @@ $("#enddate").val("");
 for(b=0;b<allindicatorsarray.length;b++){
     
   $("#"+allindicatorsarray[b]).val("");  
+    
+} 
+
+//clear data values
+
+for(b=0;b<allnontargetindicatorsarray.length;b++){
+    
+  $("#"+allnontargetindicatorsarray[b]).attr("data-previous_"+allnontargetindicatorsarray[b],"0");  
+  $("#"+allnontargetindicatorsarray[b]).attr("data-"+allnontargetindicatorsarray[b],"0");  
     
 } 
 
@@ -1902,9 +2043,16 @@ function selectsearchdata()
  
      
 	   //console.log(doc);
-	   for(b=0;b<doc.total_rows;b++){
-	   var dat={};
-	   dat=doc.rows[b];
+	   for(b=0;b<doc.total_rows;b++)
+           {
+             
+               var dat={};
+               dat=doc.rows[b];
+               
+                 var myid=dat.doc._id;
+               if(myid.indexOf("annual")===-1){
+	   
+	       
 	      //console.log(dat.doc.facility);
               //how to reference each column 
               //alert(dat.doc.startdate);
@@ -1913,11 +2061,13 @@ function selectsearchdata()
               if(dat.doc.syncstatus==="Yes"){
                  statusicon=""; 
                   
-              }
+               }
 	     
 		 //dbdata+="<tr><td> "+dat.doc.startdate+" </td><td>"+dat.doc.syncstatus+"</td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\")'>Edit</button></td></tr>";
 		 dbdata+="<tr id='"+dat.doc._id+"'><td> "+dat.doc.enddate+" </td><td>"+dat.doc.facility+"</td><td><button class='btn-info' onclick='loadsavedweekelydata(\""+dat.doc._id+"\",\""+dat.doc.facility+"\",\"no\")'>Edit "+statusicon+"</button></td></tr>";
-          	    } //end of for loop
+          	    
+                  }
+            } //end of for loop
                     
 	appendtabledata(dbdata);
 			
@@ -2017,7 +2167,7 @@ function loadsavedweekelydata(id,facility,openreportstab ){
      $("#startdate").val(doc.startdate);   
      $("#enddate").val(doc.enddate); 
      
-        
+      seachlastcumulative(facility,doc.enddate);  
 
  $("#hiv_pos_target_child").val(doc.hiv_pos_target_child);
  $("#hiv_pos_target_adult").val(doc.hiv_pos_target_adult);
@@ -2154,43 +2304,43 @@ function updateweeklydata()
 hiv_pos_target_child=$("#hiv_pos_target_child").val();
 hiv_pos_target_adult=$("#hiv_pos_target_adult").val();
 hiv_pos_target_total=$("#hiv_pos_target_total").val();
-hiv_pos_child=$("#hiv_pos_child").val();
-hiv_pos_adult=$("#hiv_pos_adult").val();
-hiv_pos_total=$("#hiv_pos_total").val();
-new_care_child=$("#new_care_child").val();
-new_care_adult=$("#new_care_adult").val();
-new_care_total=$("#new_care_total").val();
+hiv_pos_child=$("#hiv_pos_child").attr("data-hiv_pos_child");
+hiv_pos_adult=$("#hiv_pos_adult").attr("data-hiv_pos_adult");
+hiv_pos_total=$("#hiv_pos_total").attr("data-hiv_pos_total");
+new_care_child=$("#new_care_child").attr("data-new_care_child");
+new_care_adult=$("#new_care_adult").attr("data-new_care_adult");
+new_care_total=$("#new_care_total").attr("data-new_care_total");
 new_art_target_child=$("#new_art_target_child").val();
 new_art_target_adult=$("#new_art_target_adult").val();
 new_art_target_total=$("#new_art_target_total").val();
-started_art_child=$("#started_art_child").val();
-started_art_adult=$("#started_art_adult").val();
-started_art_total=$("#started_art_total").val();
+started_art_child=$("#started_art_child").attr("data-started_art_child");
+started_art_adult=$("#started_art_adult").attr("data-started_art_adult");
+started_art_total=$("#started_art_total").attr("data-started_art_total");
 viral_load_target_child=$("#viral_load_target_child").val();
 viral_load_target_adult=$("#viral_load_target_adult").val();
 viral_load_target_total=$("#viral_load_target_total").val();
-viral_load_done_child=$("#viral_load_done_child").val();
-viral_load_done_adult=$("#viral_load_done_adult").val();
-viral_load_done_total=$("#viral_load_done_total").val();
+viral_load_done_child=$("#viral_load_done_child").attr("data-viral_load_done_child");
+viral_load_done_adult=$("#viral_load_done_adult").attr("data-viral_load_done_adult");
+viral_load_done_total=$("#viral_load_done_total").attr("data-viral_load_done_total");
 ipt_target_child=$("#ipt_target_child").val();
 ipt_target_adult=$("#ipt_target_adult").val();
 ipt_target_total=$("#ipt_target_total").val();
-ipt_child=$("#ipt_child").val();
-ipt_adult=$("#ipt_adult").val();
-ipt_total=$("#ipt_total").val();
+ipt_child=$("#ipt_child").attr("data-ipt_child");
+ipt_adult=$("#ipt_adult").attr("data-ipt_adult");
+ipt_total=$("#ipt_total").attr("data-ipt_total");
 testing_target_child=$("#testing_target_child").val();
 testing_target_adult=$("#testing_target_adult").val();
 testing_target_total=$("#testing_target_total").val();
-test_child=$("#test_child").val();
-test_adult=$("#test_adult").val();
-test_total=$("#test_total").val();
+test_child=$("#test_child").attr("data-test_child");
+test_adult=$("#test_adult").attr("data-test_adult");
+test_total=$("#test_total").attr("data-test_total");
    
     pmtct_hiv_pos_target=$("#pmtct_hiv_pos_target").val();
-    pmtct_hiv_pos=$("#pmtct_hiv_pos").val();
+    pmtct_hiv_pos=$("#pmtct_hiv_pos").attr("data-pmtct_hiv_pos");
     eid_target=$("#eid_target").val();
-    eid_done=$("#eid_done").val();
+    eid_done=$("#eid_done").attr("data-eid_done");
     viral_load_mothers_target=$("#viral_load_mothers_target").val();
-    viral_load_mothers_done=$("#viral_load_mothers_done").val();
+    viral_load_mothers_done=$("#viral_load_mothers_done").attr("data-viral_load_mothers_done");
     
     //alert(Date.parse(startdate));
     
@@ -2870,7 +3020,8 @@ function unsynceddata(){
                
                 var dat={};
 	   dat=doc.rows[c];
-               if(dat.doc.syncstatus==="No"||dat.doc.syncstatus==="0"||dat.doc.syncstatus==="no")
+           var cid=dat.doc._id;
+               if((dat.doc.syncstatus==="No"||dat.doc.syncstatus==="0"||dat.doc.syncstatus==="no") && cid.indexOf("_annual")===-1 )
                         {
                             
                          cnt1++;   
@@ -3173,6 +3324,8 @@ $("#userform").submit(function(e){
 $("#weeklydataform").submit(function(e){
     return false;
 });
+
+
 $("#exportdataform").submit(function(e){
     return false;
 });
@@ -3417,7 +3570,7 @@ function autocalculate(indicator){
     var sourcearray=calculation.split("+");
   //___
     var total=0;
-          
+     var b=0;     
     for(b=0;b<sourcearray.length;b++){
         //check if there
         if(sourcearray[b].trim()===''){sourcearray[b]=0;}
@@ -3429,10 +3582,179 @@ function autocalculate(indicator){
            console.log("Total___"+total);
         }
                                                
-        
+       if(b===(sourcearray.length-1)){
+           
+         yearlytotal(indicator);  
+           
+       } 
     }
-   
+  //initiate the check for previous months data here
+  
+  
 }//end of auto calculate
+
+//this fuction should sum and update the current value of the 
+
+function yearlytotal(indicator){
+  //  
+    var currentvalue=$("#"+indicator).val(); 
+    var previous=$("#"+indicator).data("previous_"+indicator);
+    var newtotal=$("#"+indicator).data(""+indicator);
+    
+    
+    
+   var afteradding=0;
+   if(currentvalue!==''){
+       
+   afteradding=parseInt(previous)+parseInt(currentvalue);
+   
+   }
+   
+        //----update the excel values
+      $("#"+indicator).attr( "data-"+indicator , afteradding);  //data-total_hiv_pos_child
+      //$("#"+indicator).val(afteradding);  //the total that appears on the input field
+      console.log("before adding "+previous+" After adding "+afteradding);  
+        
+}
+
+
+
+//____LOAD LAST CUMULATIVE RECORDS PRIOR TO THE SELECTED MONTH____
+
+          
+
+function seachlastcumulative(facility,before_date){
+   var chosenid=0;
+           var maximumdatecopy=0;
+    
+  //  alert(id);
+ //load from weekly db where id is as selected   
+
+   
+  weeklydatadb.allDocs({include_docs: true, descending: true}).then( function(doc) { 
+ 
+     
+	   //console.log(doc);
+           var maxdate=0;
+           
+           var pepfaryear=0;
+           
+           var startdatekey=0;
+           
+           var datevals=before_date.split("-");
+           
+           pepfaryear=datevals[0];
+           
+           if(parseInt(datevals[1])>=10)
+        {
+            //the year is curyear plus one
+           pepfaryear=parseInt(datevals[0]); 
+            
+        }
+        else {
+            
+          pepfaryear=parseInt(datevals[0])-parseInt(1);  
+            
+            }
+           startdatekey=pepfaryear+datevals[1]+datevals[2];
+           
+           var currentenddatekey=before_date.replace(/-/g,"");
+          
+          
+	   for(a=0;a<doc.total_rows;a++)
+           {
+               var dat={};
+	   dat=doc.rows[a];
+               if(dat.doc.facility===facility){
+             //compare the selected date and all the end dates
+             //check if the db end date is in between the pepfar year startdate and the entered end date
+             //if the 
+             var dbenddate=dat.doc.enddate;
+            var dbenddatekey=dbenddate.replace(/-/g,"");
+             console.log(" pepfar start date is :"+startdatekey+" Db end date key is :"+dbenddatekey +" Entered end date key is :"+currentenddatekey+" Current maximum date is :"+maximumdatecopy);
+	  if((parseInt(dbenddatekey)>parseInt(startdatekey)) && (parseInt(dbenddatekey)>maximumdatecopy) && (parseInt(dbenddatekey)<currentenddatekey ) ) 
+           {
+               var tar=dat.doc.enddate;
+               maximumdatecopy=tar.replace(/-/g,"");
+               chosenid=dat.doc._id;
+           }
+		 
+                 }
+               
+                 if(a===parseInt(doc.total_rows)-1){
+                       console.log(" maximum date copy is"+maximumdatecopy+"  chosen id "+chosenid);
+                     //pass the final id
+                     loadcumulative(chosenid);
+                 }
+                 
+          	 } //end of for loop
+	 
+	  	
+		
+  }).catch(function (err){console.log(err)});
+
+       
+       }//end of function searchlastcumulative 
+       
+       
+  function loadcumulative(id){
+   	
+	weeklydatadb.get(id).then(function (doc) {
+       
+  //populate the data- attributes with the correct data..
+ $("#hiv_pos_child").attr("data-previous_hiv_pos_child",doc.hiv_pos_child);
+ $("#hiv_pos_adult").attr("data-previous_hiv_pos_adult",doc.hiv_pos_adult);
+ $("#hiv_pos_total").attr("data-previous_hiv_pos_total",doc.hiv_pos_total);
+ 
+ $("#new_care_child").attr("data-previous_new_care_child",doc.new_care_child);
+ $("#new_care_adult").attr("data-previous_new_care_adult",doc.new_care_adult);
+ $("#new_care_total").attr("data-previous_new_care_total",doc.new_care_total);
+
+ $("#started_art_child").attr("data-previous_started_art_child",doc.started_art_child);
+ $("#started_art_adult").attr("data-previous_started_art_adult",doc.started_art_adult);
+ $("#started_art_total").attr("data-previous_started_art_total",doc.started_art_total);
+
+ $("#viral_load_done_child").attr("data-previous_viral_load_done_child",doc.viral_load_done_child);
+ $("#viral_load_done_adult").attr("data-previous_viral_load_done_adult",doc.viral_load_done_adult);
+ $("#viral_load_done_total").attr("data-previous_viral_load_done_total",doc.viral_load_done_total);
+ 
+ $("#ipt_child").attr("data-previous_ipt_child",doc.ipt_child);
+ $("#ipt_adult").attr("data-previous_ipt_adult",doc.ipt_adult);
+ $("#ipt_total").attr("data-previous_ipt_total",doc.ipt_total);
+
+ $("#test_child").attr("data-previous_test_child",doc.test_child);
+ $("#test_adult").attr("data-previous_test_adult",doc.test_adult);
+ $("#test_total").attr("data-previous_test_total",doc.test_total);
+
+
+   $("#pmtct_hiv_pos").attr("data-previous_pmtct_hiv_pos",doc.pmtct_hiv_pos);
+
+   $("#eid_done").attr("data-previous_eid_done",doc.eid_done);
+
+   $("#viral_load_mothers_done").attr("data-previous_viral_load_mothers_done",doc.viral_load_mothers_done);
+  // we populate data- attributes with a sum of previous data and the current data
+  
+  //now that the process is done upon data entry, and on this point we are editing, we should prompt a reload
+  
+  
+   for(b=0;b<allnontargetindicatorsarray.length;b++){
+        //check if there
+        if($("#"+allnontargetindicatorsarray[b]).val()!==''){
+ 
+        yearlytotal(allnontargetindicatorsarray[b]);
+           // $("#"+allnontargetindicatorsarray).attr("data-"+allnontargetindicatorsarray,total);
+            
+            }
+                                             
+                                             }
+                                             
+                                             
+
+});// end of db get
+
+ 
+}// end of load cumulative
+
 
 
 
