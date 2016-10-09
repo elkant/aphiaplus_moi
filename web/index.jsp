@@ -1423,10 +1423,10 @@ function settargets(){
      var receivedvalues=$("#facilityname").val();
     if(cur_enddate!=='' && receivedvalues!==''){
        //call the loader for lastly entered data
-       
-       var allfacs=receivedvalues.split("-");
+       //console.log("facility is_____"+receivedvalues);
+       var allfacs=receivedvalues.split("_");
        seachlastcumulative(allfacs[1],cur_enddate);
-            
+        //console.log("seachlastcumulative("+allfacs[1]+","+cur_enddate+")");    
         var datearray=cur_enddate.split("-");
         var datekey= cur_enddate.replace(/-/g,""); 
        
@@ -3068,7 +3068,7 @@ function closeapp()
 //========================================201605 custom percentage calculator======================================
 
 
-function fillprogressbar(numer,denomin,progressbarid,datavalueid,cmts){
+function fillprogressbar(denominator_is_value,numer,denomin,progressbarid,datavalueid,cmts){
     
         //console.log(datavalueid+" "+datavalueid.indexOf("adult"));
        // console.log(" "+cmts);
@@ -3083,9 +3083,18 @@ function fillprogressbar(numer,denomin,progressbarid,datavalueid,cmts){
                 applycoloronbar="no";
             }
         }
-        
-    var numerator=$("#"+numer).val();
-    var denominator=$("#"+denomin).val();
+     //initially, we were using input values but now we are using data-previous attribute   
+   // var numerator=$("#"+numer).val();
+    //var denominator=$("#"+denomin).val();
+    
+     var numerator=$("#"+numer).attr("data-"+numer);
+     var denominator=$("#"+denomin).val();
+     if(denominator_is_value!=='yes'){
+         
+       denominator=  $("#"+denomin).attr("data-"+denomin);
+         
+     }
+    
       if(denominator!==''&&numerator!==''){  
     //console.log(denomin+" "+denominator);
     //console.log(numer+" "+numerator);
