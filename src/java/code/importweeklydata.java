@@ -201,7 +201,13 @@ hiv_pos_care_perc_adult=request.getParameter("hiv_pos_care_perc_adult");
 hiv_pos_care_perc_all=request.getParameter("hiv_pos_care_perc_all");
 started_art_perc_child=request.getParameter("started_art_perc_child");
 started_art_perc_adult=request.getParameter("started_art_perc_adult");
+//i had made an error in naming variable started_art_perc_all$
+if(request.getParameter("started_art_perc_all")!=null){
 started_art_perc_all=request.getParameter("started_art_perc_all");
+}
+else {
+started_art_perc_all=request.getParameter("started_art_perc_all$");
+}
 viral_test_perc_child=request.getParameter("viral_test_perc_child");
 viral_test_perc_adult=request.getParameter("viral_test_perc_adult");
 viral_test_perc_all=request.getParameter("viral_test_perc_all");
@@ -352,14 +358,18 @@ tested_cmts=request.getParameter("tested_cmts");
                         
                         
                         if(conn.pst1.executeUpdate()==1)
-                        {    
+                        { 
+                            if(!id.contains("annual")){ //notify user only when importing weekly summaries
                             txtresponse="<font color='green'> Data for <b> "+facilityname+" </b> updated succesfully for dates "+startdate+" to "+enddate+" </font>";
                              sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
-                             
+                            }
                         }
                         else 
                         {
+                              if(!id.contains("annual")){
                         txtresponse="<font color='green'>Data for <b>"+facilityname+"</b></font><font color='red'> NOT updated </font><font color='green'> for dates "+startdate+" to "+enddate+". This is because data for a similar date already exists. </font>";
+                        
+                              }
                         }
    
    
@@ -481,22 +491,22 @@ tested_cmts=request.getParameter("tested_cmts");
                         
                         
                         if(conn.pst1.executeUpdate()==1){
-                            
+                             if(!id.contains("annual")){
                             txtresponse="<font color='green'> Data for "+facilityname+" added succesfully for dates "+startdate+" to "+enddate+" </font>";
                            
                             //add team leaders variable at this point 
                             sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
-                                                        } 
+                             }                          } 
                         else {
-                            
+                             if(!id.contains("annual")){
                           txtresponse="<font color='green'>Data for "+facilityname+" </font><font color='red'>  NOT inserted </font><font color='green'> succesfully for dates "+startdate+" to "+enddate+". This could be a duplicate error. </font>";
-                            
+                             }
                              }
        
        
    }
            
-   
+    if(id.contains("annual")){txtresponse="";}
          if(conn.st!=null){conn.st.close();}  
          if(conn.rs!=null){conn.rs.close();}  
          if(conn.pst1!=null){conn.pst1.close();}  
@@ -518,8 +528,9 @@ tested_cmts=request.getParameter("tested_cmts");
             Logger.getLogger(importweeklydata.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        
+       
       out.println(txtresponse);   
+        
         
         
     }

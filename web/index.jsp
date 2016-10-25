@@ -987,6 +987,105 @@ var weeklydata;
 //receive the artist, song title and lyrics text
 function insertweeklydata(id,facility,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total ,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) {
    
+   
+var hiv_pos_yield_perc_child_in="";
+var hiv_pos_yield_perc_adult_in="";
+var hiv_pos_yield_perc_all_in="";
+var hiv_pos_care_perc_child_in="";
+var hiv_pos_care_perc_adult_in="";
+var hiv_pos_care_perc_all_in="";
+var started_art_perc_child_in="";
+var started_art_perc_adult_in="";
+var started_art_perc_all_in="";
+var viral_test_perc_child_in="";
+var viral_test_perc_adult_in="";
+var viral_test_perc_all_in="";
+var ipt_done_perc_child_in="";
+var ipt_done_perc_adult_in="";
+var ipt_done_perc_all_in="";
+var tested_perc_child_in="";
+var tested_perc_adult_in="";
+var tested_perc_all_in="";
+var pmtct_hiv_pos_perc_in="";
+var eid_done_perc_in="";
+var viral_load_mothers_perc_in="";
+   
+   
+    if(id.indexOf("_weekly")>=0){         
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").val();
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").val();
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").val();
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").val();
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").val();
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").val();
+ started_art_perc_child_in=$("#started_art_perc_child_in").val();
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").val();
+ started_art_perc_all_in=$("#started_art_perc_all_in").val();
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").val();
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").val();
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").val();
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").val();
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").val();
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").val();
+ tested_perc_child_in=$("#tested_perc_child_in").val();
+ tested_perc_adult_in=$("#tested_perc_adult_in").val();
+ tested_perc_all_in=$("#tested_perc_all_in").val();
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").val();
+ eid_done_perc_in=$("#eid_done_perc_in").val();
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").val();
+       
+                    }
+            else if(id.indexOf("_annual")>=0) {
+                
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").attr("data-hiv_pos_yield_perc_child_in");
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").attr("data-hiv_pos_yield_perc_adult_in");
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").attr("data-hiv_pos_yield_perc_all_in");
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").attr("data-hiv_pos_care_perc_child_in");
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").attr("data-hiv_pos_care_perc_adult_in");
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").attr("data-hiv_pos_care_perc_all_in");
+ started_art_perc_child_in=$("#started_art_perc_child_in").attr("data-started_art_perc_child_in");
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").attr("data-started_art_perc_adult_in");
+ started_art_perc_all_in=$("#started_art_perc_all_in").attr("data-started_art_perc_all_in");
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").attr("data-viral_test_perc_child_in");
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").attr("data-viral_test_perc_adult_in");
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").attr("data-viral_test_perc_all_in");
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").attr("data-ipt_done_perc_child_in");
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").attr("data-ipt_done_perc_adult_in");
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").attr("data-ipt_done_perc_all_in");
+ tested_perc_child_in=$("#tested_perc_child_in").attr("data-tested_perc_child_in");
+ tested_perc_adult_in=$("#tested_perc_adult_in").attr("data-tested_perc_adult_in");
+ tested_perc_all_in=$("#tested_perc_all_in").attr("data-tested_perc_all_in");
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").attr("data-pmtct_hiv_pos_perc_in");
+ eid_done_perc_in=$("#eid_done_perc_in").attr("data-eid_done_perc_in");
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").attr("data-viral_load_mothers_perc_in");   
+    console.log("__annual percentage"+started_art_perc_all_in);            
+            }
+   else if(id.indexOf("_weekly")===-1 && id.indexOf("_annual")===-1){         
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").val();
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").val();
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").val();
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").val();
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").val();
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").val();
+ started_art_perc_child_in=$("#started_art_perc_child_in").val();
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").val();
+ started_art_perc_all_in=$("#started_art_perc_all_in").val();
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").val();
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").val();
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").val();
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").val();
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").val();
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").val();
+ tested_perc_child_in=$("#tested_perc_child_in").val();
+ tested_perc_adult_in=$("#tested_perc_adult_in").val();
+ tested_perc_all_in=$("#tested_perc_all_in").val();
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").val();
+ eid_done_perc_in=$("#eid_done_perc_in").val();
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").val();
+       
+                    }
+   
+   
         weeklydata = {
         _id: id, //made of startdate_enddate_facilitymfl_frequency //frequency could be _annual or _weekly
 	facility:facility,
@@ -1036,32 +1135,30 @@ viral_load_mothers_target:viral_load_mothers_target,
 viral_load_mothers_done:viral_load_mothers_done,
        
         //percents         
-          
-           
-hiv_pos_yield_perc_child:$("#hiv_pos_yield_perc_child_in").val(),
-hiv_pos_yield_perc_adult:$("#hiv_pos_yield_perc_adult_in").val(),
-hiv_pos_yield_perc_all:$("#hiv_pos_yield_perc_all_in").val(),
-hiv_pos_care_perc_child:$("#hiv_pos_care_perc_child_in").val(),
-hiv_pos_care_perc_adult:$("#hiv_pos_care_perc_adult_in").val(),
-hiv_pos_care_perc_all:$("#hiv_pos_care_perc_all_in").val(),
-started_art_perc_child:$("#started_art_perc_child_in").val(),
-started_art_perc_adult:$("#started_art_perc_adult_in").val(),
-started_art_perc_all:$("#started_art_perc_all_in").val(),
-viral_test_perc_child:$("#viral_test_perc_child_in").val(),
-viral_test_perc_adult:$("#viral_test_perc_adult_in").val(),
-viral_test_perc_all:$("#viral_test_perc_all_in").val(),
-ipt_done_perc_child:$("#ipt_done_perc_child_in").val(),
-ipt_done_perc_adult:$("#ipt_done_perc_adult_in").val(),
-ipt_done_perc_all:$("#ipt_done_perc_all_in").val(),
-tested_perc_child:$("#tested_perc_child_in").val(),
-tested_perc_adult:$("#tested_perc_adult_in").val(),
-tested_perc_all:$("#tested_perc_all_in").val(),
-pmtct_hiv_pos_perc:$("#pmtct_hiv_pos_perc_in").val(),
-eid_done_perc:$("#eid_done_perc_in").val(),
-viral_load_mothers_perc:$("#viral_load_mothers_perc_in").val(),
+         
+hiv_pos_yield_perc_child:hiv_pos_yield_perc_child_in,
+hiv_pos_yield_perc_adult:hiv_pos_yield_perc_adult_in,
+hiv_pos_yield_perc_all:hiv_pos_yield_perc_all_in,
+hiv_pos_care_perc_child:hiv_pos_care_perc_child_in,
+hiv_pos_care_perc_adult:hiv_pos_care_perc_adult_in,
+hiv_pos_care_perc_all:hiv_pos_care_perc_all_in,
+started_art_perc_child:started_art_perc_child_in,
+started_art_perc_adult:started_art_perc_adult_in,
+started_art_perc_all:started_art_perc_all_in,
+viral_test_perc_child:viral_test_perc_child_in,
+viral_test_perc_adult:viral_test_perc_adult_in,
+viral_test_perc_all:viral_test_perc_all_in,
+ipt_done_perc_child:ipt_done_perc_child_in,
+ipt_done_perc_adult:ipt_done_perc_adult_in,
+ipt_done_perc_all:ipt_done_perc_all_in,
+tested_perc_child:tested_perc_child_in,
+tested_perc_adult:tested_perc_adult_in,
+tested_perc_all:tested_perc_all_in,
+pmtct_hiv_pos_perc:pmtct_hiv_pos_perc_in,
+eid_done_perc:eid_done_perc_in,
+viral_load_mothers_perc:viral_load_mothers_perc_in,
        
-       
-       
+             
           
         
         //comments
@@ -1357,7 +1454,7 @@ function createdynamicinputs(){
               }
               
               
-              row2+=" <label> "+indicatorname+" <font color='orange'><b> "+label+" </b> <input type='hidden' id='"+datafieldid+"_in' /> </font> </label><div class='progress'> <div class='progress-bar progress-bar-info' id='"+progressbarID+"' role='progressbar' aria-valuenow='72' aria-valuemin='0' aria-valuemax='100' style='width: 100%;text-align:left;'> <span  id='"+datafieldid+"' style='color:black;'>No data</span></div>  </div> ";
+              row2+=" <label> "+indicatorname+" <font color='orange'><b> "+label+" </b> <input data-"+datafieldid+"_in='0' type='hidden' id='"+datafieldid+"_in' /> </font> </label><div class='progress'> <div class='progress-bar progress-bar-info' id='"+progressbarID+"' role='progressbar' aria-valuenow='72' aria-valuemin='0' aria-valuemax='100' style='width: 100%;text-align:left;'> <span  id='"+datafieldid+"' style='color:black;'>No data</span></div>  </div> ";
             //IndicatorID	Age	IndicatorName	Level	datainputtype	Min	Max	onblur	onkeypress	Class	Required
     if(Commentsid!=='')
   {
@@ -1425,6 +1522,7 @@ function settargets(){
        //call the loader for lastly entered data
        //console.log("facility is_____"+receivedvalues);
        var allfacs=receivedvalues.split("_");
+       
        seachlastcumulative(allfacs[1],cur_enddate);
         //console.log("seachlastcumulative("+allfacs[1]+","+cur_enddate+")");    
         var datearray=cur_enddate.split("-");
@@ -1510,8 +1608,8 @@ $("#pmtct_hiv_pos_target").val("");
 $("#eid_target").val("");
 $("#viral_load_mothers_target").val("");
     
-}); 
-    
+});   
+ loadallpercents(); 
  }//end of checking if there is a blank  
 
 
@@ -1537,86 +1635,86 @@ hiv_pos_target_child=$("#hiv_pos_target_child").val();
 hiv_pos_target_adult=$("#hiv_pos_target_adult").val();
 hiv_pos_target_total=$("#hiv_pos_target_total").val();
 
-hiv_pos_child_w=$("#hiv_pos_child").attr("data-hiv_pos_child");
-hiv_pos_adult_w=$("#hiv_pos_adult").attr("data-hiv_pos_adult");
-hiv_pos_total_w=$("#hiv_pos_total").attr("data-hiv_pos_total");
+hiv_pos_child=$("#hiv_pos_child").attr("data-hiv_pos_child");
+hiv_pos_adult=$("#hiv_pos_adult").attr("data-hiv_pos_adult");
+hiv_pos_total=$("#hiv_pos_total").attr("data-hiv_pos_total");
 
-hiv_pos_child=$("#hiv_pos_child").val();
-hiv_pos_adult=$("#hiv_pos_adult").val();
-hiv_pos_total=$("#hiv_pos_total").val();
+hiv_pos_child_w=$("#hiv_pos_child").val();
+hiv_pos_adult_w=$("#hiv_pos_adult").val();
+hiv_pos_total_w=$("#hiv_pos_total").val();
 
-new_care_child_w=$("#new_care_child").attr("data-new_care_child");
-new_care_adult_w=$("#new_care_adult").attr("data-new_care_adult");
-new_care_total_w=$("#new_care_total").attr("data-new_care_total");
+new_care_child=$("#new_care_child").attr("data-new_care_child");
+new_care_adult=$("#new_care_adult").attr("data-new_care_adult");
+new_care_total=$("#new_care_total").attr("data-new_care_total");
 
-new_care_child=$("#new_care_child").val();
-new_care_adult=$("#new_care_adult").val();
-new_care_total=$("#new_care_total").val();
+new_care_child_w=$("#new_care_child").val();
+new_care_adult_w=$("#new_care_adult").val();
+new_care_total_w=$("#new_care_total").val();
 
 new_art_target_child=$("#new_art_target_child").val();
 new_art_target_adult=$("#new_art_target_adult").val();
 new_art_target_total=$("#new_art_target_total").val();
 
-started_art_child_w=$("#started_art_child").attr("data-started_art_child");
-started_art_adult_w=$("#started_art_adult").attr("data-started_art_adult");
-started_art_total_w=$("#started_art_total").attr("data-started_art_total");
+started_art_child=$("#started_art_child").attr("data-started_art_child");
+started_art_adult=$("#started_art_adult").attr("data-started_art_adult");
+started_art_total=$("#started_art_total").attr("data-started_art_total");
 
-started_art_child=$("#started_art_child").val();
-started_art_adult=$("#started_art_adult").val();
-started_art_total=$("#started_art_total").val();
+started_art_child_w=$("#started_art_child").val();
+started_art_adult_w=$("#started_art_adult").val();
+started_art_total_w=$("#started_art_total").val();
 
 viral_load_target_child=$("#viral_load_target_child").val();
 viral_load_target_adult=$("#viral_load_target_adult").val();
 viral_load_target_total=$("#viral_load_target_total").val();
 
-viral_load_done_child_w=$("#viral_load_done_child").attr("data-viral_load_done_child");
-viral_load_done_adult_w=$("#viral_load_done_adult").attr("data-viral_load_done_adult");
-viral_load_done_total_w=$("#viral_load_done_total").attr("data-viral_load_done_total");
+viral_load_done_child=$("#viral_load_done_child").attr("data-viral_load_done_child");
+viral_load_done_adult=$("#viral_load_done_adult").attr("data-viral_load_done_adult");
+viral_load_done_total=$("#viral_load_done_total").attr("data-viral_load_done_total");
 
-viral_load_done_child=$("#viral_load_done_child").val();
-viral_load_done_adult=$("#viral_load_done_adult").val();
-viral_load_done_total=$("#viral_load_done_total").val();
+viral_load_done_child_w=$("#viral_load_done_child").val();
+viral_load_done_adult_w=$("#viral_load_done_adult").val();
+viral_load_done_total_w=$("#viral_load_done_total").val();
 
 ipt_target_child=$("#ipt_target_child").val();
 ipt_target_adult=$("#ipt_target_adult").val();
 ipt_target_total=$("#ipt_target_total").val();
 
-ipt_child_w=$("#ipt_child").attr("data-ipt_child");
-ipt_adult_w=$("#ipt_adult").attr("data-ipt_adult");
-ipt_total_w=$("#ipt_total").attr("data-ipt_total");
+ipt_child=$("#ipt_child").attr("data-ipt_child");
+ipt_adult=$("#ipt_adult").attr("data-ipt_adult");
+ipt_total=$("#ipt_total").attr("data-ipt_total");
 
-ipt_child=$("#ipt_child").val();
-ipt_adult=$("#ipt_adult").val();
-ipt_total=$("#ipt_total").val();
+ipt_child_w=$("#ipt_child").val();
+ipt_adult_w=$("#ipt_adult").val();
+ipt_total_w=$("#ipt_total").val();
 
 testing_target_child=$("#testing_target_child").val();
 testing_target_adult=$("#testing_target_adult").val();
 testing_target_total=$("#testing_target_total").val();
 
-test_child_w=$("#test_child").attr("data-test_child");
-test_adult_w=$("#test_adult").attr("data-test_adult");
-test_total_w=$("#test_total").attr("data-test_total");
+test_child=$("#test_child").attr("data-test_child");
+test_adult=$("#test_adult").attr("data-test_adult");
+test_total=$("#test_total").attr("data-test_total");
 
-test_child=$("#test_child").val();
-test_adult=$("#test_adult").val();
-test_total=$("#test_total").val();
+test_child_w=$("#test_child").val();
+test_adult_w=$("#test_adult").val();
+test_total_w=$("#test_total").val();
     
     
    
     pmtct_hiv_pos_target=$("#pmtct_hiv_pos_target").val();
     
-    pmtct_hiv_pos_w=$("#pmtct_hiv_pos").attr("data-pmtct_hiv_pos");
-    pmtct_hiv_pos=$("#pmtct_hiv_pos").val();
+    pmtct_hiv_pos=$("#pmtct_hiv_pos").attr("data-pmtct_hiv_pos");
+    pmtct_hiv_pos_w=$("#pmtct_hiv_pos").val();
     
     eid_target=$("#eid_target").val();
     
-    eid_done_w=$("#eid_done").attr("data-eid_done");
-    eid_done=$("#eid_done").val();
+    eid_done=$("#eid_done").attr("data-eid_done");
+    eid_done_w=$("#eid_done").val();
     
     viral_load_mothers_target=$("#viral_load_mothers_target").val();
     
-    viral_load_mothers_done_w=$("#viral_load_mothers_done").attr("data-viral_load_mothers_done");
-    viral_load_mothers_done=$("#viral_load_mothers_done").val();
+    viral_load_mothers_done=$("#viral_load_mothers_done").attr("data-viral_load_mothers_done");
+    viral_load_mothers_done_w=$("#viral_load_mothers_done").val();
     
     
     
@@ -2236,7 +2334,7 @@ function loadsavedweekelydata(id,facility,openreportstab ){
         //$(".editdata").show();
      $("#savebutton").hide();
      $("#updatebutton").show();
-     $("#savenewbutton").show();
+     //$("#savenewbutton").show();
       checkids();
       
  $('#newdatabutton').html("<i class='glyphicon glyphicon-edit'></i>Edit Data");
@@ -2293,6 +2391,7 @@ function updateweeklydata()
 {
  //this id will be used to update the entered data
    var id=$("#rowid").val();
+   var annualid=id.replace(/weekly/g,"annual");
            //receive all the fields from the weekly data from
     facility=$("#facilityname").val();
    //No facility name should have an underscore since its a special key
@@ -2304,44 +2403,87 @@ function updateweeklydata()
 hiv_pos_target_child=$("#hiv_pos_target_child").val();
 hiv_pos_target_adult=$("#hiv_pos_target_adult").val();
 hiv_pos_target_total=$("#hiv_pos_target_total").val();
+
 hiv_pos_child=$("#hiv_pos_child").attr("data-hiv_pos_child");
 hiv_pos_adult=$("#hiv_pos_adult").attr("data-hiv_pos_adult");
 hiv_pos_total=$("#hiv_pos_total").attr("data-hiv_pos_total");
+
+hiv_pos_child_w=$("#hiv_pos_child").val();
+hiv_pos_adult_w=$("#hiv_pos_adult").val();
+hiv_pos_total_w=$("#hiv_pos_total").val();
+
 new_care_child=$("#new_care_child").attr("data-new_care_child");
 new_care_adult=$("#new_care_adult").attr("data-new_care_adult");
 new_care_total=$("#new_care_total").attr("data-new_care_total");
+
+new_care_child_w=$("#new_care_child").val();
+new_care_adult_w=$("#new_care_adult").val();
+new_care_total_w=$("#new_care_total").val();
+
 new_art_target_child=$("#new_art_target_child").val();
 new_art_target_adult=$("#new_art_target_adult").val();
 new_art_target_total=$("#new_art_target_total").val();
+
 started_art_child=$("#started_art_child").attr("data-started_art_child");
 started_art_adult=$("#started_art_adult").attr("data-started_art_adult");
 started_art_total=$("#started_art_total").attr("data-started_art_total");
+
+started_art_child_w=$("#started_art_child").val();
+started_art_adult_w=$("#started_art_adult").val();
+started_art_total_w=$("#started_art_total").val();
+
 viral_load_target_child=$("#viral_load_target_child").val();
 viral_load_target_adult=$("#viral_load_target_adult").val();
 viral_load_target_total=$("#viral_load_target_total").val();
+
 viral_load_done_child=$("#viral_load_done_child").attr("data-viral_load_done_child");
 viral_load_done_adult=$("#viral_load_done_adult").attr("data-viral_load_done_adult");
 viral_load_done_total=$("#viral_load_done_total").attr("data-viral_load_done_total");
+
+viral_load_done_child_w=$("#viral_load_done_child").val();
+viral_load_done_adult_w=$("#viral_load_done_adult").val();
+viral_load_done_total_w=$("#viral_load_done_total").val();
+
 ipt_target_child=$("#ipt_target_child").val();
 ipt_target_adult=$("#ipt_target_adult").val();
 ipt_target_total=$("#ipt_target_total").val();
+
 ipt_child=$("#ipt_child").attr("data-ipt_child");
 ipt_adult=$("#ipt_adult").attr("data-ipt_adult");
 ipt_total=$("#ipt_total").attr("data-ipt_total");
+
+ipt_child_w=$("#ipt_child").val();
+ipt_adult_w=$("#ipt_adult").val();
+ipt_total_w=$("#ipt_total").val();
+
+
 testing_target_child=$("#testing_target_child").val();
 testing_target_adult=$("#testing_target_adult").val();
 testing_target_total=$("#testing_target_total").val();
+
 test_child=$("#test_child").attr("data-test_child");
 test_adult=$("#test_adult").attr("data-test_adult");
 test_total=$("#test_total").attr("data-test_total");
+
+test_child_w=$("#test_child").val();
+test_adult_w=$("#test_adult").val();
+test_total_w=$("#test_total").val();
+
    
     pmtct_hiv_pos_target=$("#pmtct_hiv_pos_target").val();
     pmtct_hiv_pos=$("#pmtct_hiv_pos").attr("data-pmtct_hiv_pos");
+    pmtct_hiv_pos_w=$("#pmtct_hiv_pos").val();
+    
     eid_target=$("#eid_target").val();
     eid_done=$("#eid_done").attr("data-eid_done");
+    eid_done_w=$("#eid_done").val();
+    
     viral_load_mothers_target=$("#viral_load_mothers_target").val();
     viral_load_mothers_done=$("#viral_load_mothers_done").attr("data-viral_load_mothers_done");
-    
+    viral_load_mothers_done_w=$("#viral_load_mothers_done").val();
+   
+        
+        //viral_load_done_child_w=$("#viral_load_done_child").attr("data-viral_load_done_child");
     //alert(Date.parse(startdate));
     
     var user=$("#username").val(); 
@@ -2656,7 +2798,8 @@ test_total=$("#test_total").attr("data-test_total");
          
      var facilityname=facilitynameandmfl[1];
             //save data to the db
-          saveweeklyupdates(id,facilityname,startdate,enddate,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) ;
+          saveweeklyupdates(id,facilityname,startdate,enddate,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child_w,hiv_pos_adult_w,hiv_pos_total_w,new_care_child_w,new_care_adult_w,new_care_total_w,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child_w,started_art_adult_w,started_art_total_w,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child_w,viral_load_done_adult_w,viral_load_done_total_w,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child_w,ipt_adult_w,ipt_total_w,testing_target_child,testing_target_adult,testing_target_total,test_child_w,test_adult_w,test_total_w,pmtct_hiv_pos_target,pmtct_hiv_pos_w,eid_target,eid_done_w, viral_load_mothers_target,viral_load_mothers_done_w,timestamp,user, syncstatus) ;
+          saveweeklyupdates(annualid,facilityname,startdate,enddate,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) ;
 
 
 //call refressh code here
@@ -2677,6 +2820,109 @@ $('#inpatient_uptake_cmts').focus();
 }
    
 function saveweeklyupdates(id,facilityname,startdate,enddate,hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total,hiv_pos_child,hiv_pos_adult,hiv_pos_total,new_care_child,new_care_adult,new_care_total,new_art_target_child,new_art_target_adult,new_art_target_total,started_art_child,started_art_adult,started_art_total,viral_load_target_child,viral_load_target_adult,viral_load_target_total,viral_load_done_child,viral_load_done_adult,viral_load_done_total,ipt_target_child,ipt_target_adult,ipt_target_total,ipt_child,ipt_adult,ipt_total,testing_target_child,testing_target_adult,testing_target_total,test_child,test_adult,test_total,pmtct_hiv_pos_target,pmtct_hiv_pos,eid_target,eid_done, viral_load_mothers_target,viral_load_mothers_done,timestamp,user, syncstatus) {
+ 
+ 
+ 
+var hiv_pos_yield_perc_child_in="";
+var hiv_pos_yield_perc_adult_in="";
+var hiv_pos_yield_perc_all_in="";
+var hiv_pos_care_perc_child_in="";
+var hiv_pos_care_perc_adult_in="";
+var hiv_pos_care_perc_all_in="";
+var started_art_perc_child_in="";
+var started_art_perc_adult_in="";
+var started_art_perc_all_in="";
+var viral_test_perc_child_in="";
+var viral_test_perc_adult_in="";
+var viral_test_perc_all_in="";
+var ipt_done_perc_child_in="";
+var ipt_done_perc_adult_in="";
+var ipt_done_perc_all_in="";
+var tested_perc_child_in="";
+var tested_perc_adult_in="";
+var tested_perc_all_in="";
+var pmtct_hiv_pos_perc_in="";
+var eid_done_perc_in="";
+var viral_load_mothers_perc_in="";
+   
+   
+    if(id.indexOf("_weekly")>=0){
+        
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").val();
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").val();
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").val();
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").val();
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").val();
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").val();
+ started_art_perc_child_in=$("#started_art_perc_child_in").val();
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").val();
+ started_art_perc_all_in=$("#started_art_perc_all_in").val();
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").val();
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").val();
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").val();
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").val();
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").val();
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").val();
+ tested_perc_child_in=$("#tested_perc_child_in").val();
+ tested_perc_adult_in=$("#tested_perc_adult_in").val();
+ tested_perc_all_in=$("#tested_perc_all_in").val();
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").val();
+ eid_done_perc_in=$("#eid_done_perc_in").val();
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").val();
+       
+                    }
+            else if(id.indexOf("_annual")>=0) {
+                
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").attr("data-hiv_pos_yield_perc_child_in");
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").attr("data-hiv_pos_yield_perc_adult_in");
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").attr("data-hiv_pos_yield_perc_all_in");
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").attr("data-hiv_pos_care_perc_child_in");
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").attr("data-hiv_pos_care_perc_adult_in");
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").attr("data-hiv_pos_care_perc_all_in");
+ started_art_perc_child_in=$("#started_art_perc_child_in").attr("data-started_art_perc_child_in");
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").attr("data-started_art_perc_adult_in");
+ started_art_perc_all_in=$("#started_art_perc_all_in").attr("data-started_art_perc_all_in");
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").attr("data-viral_test_perc_child_in");
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").attr("data-viral_test_perc_adult_in");
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").attr("data-viral_test_perc_all_in");
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").attr("data-ipt_done_perc_child_in");
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").attr("data-ipt_done_perc_adult_in");
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").attr("data-ipt_done_perc_all_in");
+ tested_perc_child_in=$("#tested_perc_child_in").attr("data-tested_perc_child_in");
+ tested_perc_adult_in=$("#tested_perc_adult_in").attr("data-tested_perc_adult_in");
+ tested_perc_all_in=$("#tested_perc_all_in").attr("data-tested_perc_all_in");
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").attr("data-pmtct_hiv_pos_perc_in");
+ eid_done_perc_in=$("#eid_done_perc_in").attr("data-eid_done_perc_in");
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").attr("data-viral_load_mothers_perc_in");   
+                
+            }
+   else if(id.indexOf("_weekly")===-1 && id.indexOf("_annual")===-1){
+       
+ hiv_pos_yield_perc_child_in=$("#hiv_pos_yield_perc_child_in").val();
+ hiv_pos_yield_perc_adult_in=$("#hiv_pos_yield_perc_adult_in").val();
+ hiv_pos_yield_perc_all_in=$("#hiv_pos_yield_perc_all_in").val();
+ hiv_pos_care_perc_child_in=$("#hiv_pos_care_perc_child_in").val();
+ hiv_pos_care_perc_adult_in=$("#hiv_pos_care_perc_adult_in").val();
+ hiv_pos_care_perc_all_in=$("#hiv_pos_care_perc_all_in").val();
+ started_art_perc_child_in=$("#started_art_perc_child_in").val();
+ started_art_perc_adult_in=$("#started_art_perc_adult_in").val();
+ started_art_perc_all_in=$("#started_art_perc_all_in").val();
+ viral_test_perc_child_in=$("#viral_test_perc_child_in").val();
+ viral_test_perc_adult_in=$("#viral_test_perc_adult_in").val();
+ viral_test_perc_all_in=$("#viral_test_perc_all_in").val();
+ ipt_done_perc_child_in=$("#ipt_done_perc_child_in").val();
+ ipt_done_perc_adult_in=$("#ipt_done_perc_adult_in").val();
+ ipt_done_perc_all_in=$("#ipt_done_perc_all_in").val();
+ tested_perc_child_in=$("#tested_perc_child_in").val();
+ tested_perc_adult_in=$("#tested_perc_adult_in").val();
+ tested_perc_all_in=$("#tested_perc_all_in").val();
+ pmtct_hiv_pos_perc_in=$("#pmtct_hiv_pos_perc_in").val();
+ eid_done_perc_in=$("#eid_done_perc_in").val();
+ viral_load_mothers_perc_in=$("#viral_load_mothers_perc_in").val();
+       
+                    }
+   
+ 
  
  weeklydatadb.get(id).then(function (doc) {
         
@@ -2732,28 +2978,32 @@ doc.viral_load_mothers_target=viral_load_mothers_target;
 doc.viral_load_mothers_done=viral_load_mothers_done;
   
             //new percents
-            
-doc.hiv_pos_yield_perc_child=$("#hiv_pos_yield_perc_child_in").val();
-doc.hiv_pos_yield_perc_adult=$("#hiv_pos_yield_perc_adult_in").val();
-doc.hiv_pos_yield_perc_all=$("#hiv_pos_yield_perc_all_in").val();
-doc.hiv_pos_care_perc_child=$("#hiv_pos_care_perc_child_in").val();
-doc.hiv_pos_care_perc_adult=$("#hiv_pos_care_perc_adult_in").val();
-doc.hiv_pos_care_perc_all=$("#hiv_pos_care_perc_all_in").val();
-doc.started_art_perc_child=$("#started_art_perc_child_in").val();
-doc.started_art_perc_adult=$("#started_art_perc_adult_in").val();
-doc.started_art_perc_all=$("#started_art_perc_all_in").val();
-doc.viral_test_perc_child=$("#viral_test_perc_child_in").val();
-doc.viral_test_perc_adult=$("#viral_test_perc_adult_in").val();
-doc.viral_test_perc_all=$("#viral_test_perc_all_in").val();
-doc.ipt_done_perc_child=$("#ipt_done_perc_child_in").val();
-doc.ipt_done_perc_adult=$("#ipt_done_perc_adult_in").val();
-doc.ipt_done_perc_all=$("#ipt_done_perc_all_in").val();
-doc.tested_perc_child=$("#tested_perc_child_in").val();
-doc.tested_perc_adult=$("#tested_perc_adult_in").val();
-doc.tested_perc_all=$("#tested_perc_all_in").val();
-doc.pmtct_hiv_pos_perc=$("#pmtct_hiv_pos_perc_in").val();
-doc.eid_done_perc=$("#eid_done_perc_in").val();
-doc.viral_load_mothers_perc=$("#viral_load_mothers_perc_in").val();
+  //the default ones are weekly.. have a code for annual
+  //if id contains the annual phrase, use $("#"+percentname).attr("data-"+percentname+"_in",annualpercent);
+  
+  
+  
+doc.hiv_pos_yield_perc_child=hiv_pos_yield_perc_child_in;
+doc.hiv_pos_yield_perc_adult=hiv_pos_yield_perc_adult_in;
+doc.hiv_pos_yield_perc_all=hiv_pos_yield_perc_all_in;
+doc.hiv_pos_care_perc_child=hiv_pos_care_perc_child_in;
+doc.hiv_pos_care_perc_adult=hiv_pos_care_perc_adult_in;
+doc.hiv_pos_care_perc_all=hiv_pos_care_perc_all_in;
+doc.started_art_perc_child=started_art_perc_child_in;
+doc.started_art_perc_adult=started_art_perc_adult_in;
+doc.started_art_perc_all=started_art_perc_all_in;
+doc.viral_test_perc_child=viral_test_perc_child_in;
+doc.viral_test_perc_adult=viral_test_perc_adult_in;
+doc.viral_test_perc_all=viral_test_perc_all_in;
+doc.ipt_done_perc_child=ipt_done_perc_child_in;
+doc.ipt_done_perc_adult=ipt_done_perc_adult_in;
+doc.ipt_done_perc_all=ipt_done_perc_all_in;
+doc.tested_perc_child=tested_perc_child_in;
+doc.tested_perc_adult=tested_perc_adult_in;
+doc.tested_perc_all=tested_perc_all_in;
+doc.pmtct_hiv_pos_perc=pmtct_hiv_pos_perc_in;
+doc.eid_done_perc=eid_done_perc_in;
+doc.viral_load_mothers_perc=viral_load_mothers_perc_in;
             
             
         doc.timestamp=timestamp;
@@ -2792,12 +3042,12 @@ function importdata(){
   weeklydatadb.allDocs({include_docs: true, descending: true}).then( function(doc) { 
  syncstatusarray=[];
       //read where sync is 0
-	  
+	   var skipexporting=1;
 	   for(c=0;c<doc.total_rows;c++){
                $("#exportbutton").hide();
                $("#exportmsg").show();
                //a variable to check if all comments are added for percents below 80 percent and not amongest the indicators that can be skipped.
-            var skipexporting=0;  
+             
             var missingcomment="";
 	   var dat={};
 	   dat=doc.rows[c];
@@ -2810,28 +3060,27 @@ function importdata(){
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
                         {
             //now do an export via ajax
-            console.log(" Exporting data for "+dat.doc.facility+" percent="+dat.doc.hiv_pos_care_perc_child+"*  and comments ="+dat.doc.eid_done_cmts+"*");
+            console.log(" Exporting data for "+dat.doc.facility+" percent="+dat.doc._id+"*  and comments ="+dat.doc.eid_done_cmts+"*");
             //
-           if(((parseInt(dat.doc.hiv_pos_care_perc_child)< 90 && parseInt(dat.doc.hiv_pos_care_perc_child)!==0 && dat.doc.hiv_pos_care_perc_child!=="" ) || (parseInt(dat.doc.hiv_pos_care_perc_adult)< 90 && parseInt(dat.doc.hiv_pos_care_perc_all)!==0 && dat.doc.hiv_pos_care_perc_all!=="" )|| (parseInt(dat.doc.hiv_pos_care_perc_all)< 90 && parseInt(dat.doc.hiv_pos_care_perc_child)!==0 && dat.doc.hiv_pos_care_perc_child!=="" )) && dat.doc.hiv_pos_care_cmts==="" ){missingcommentid="@hiv_pos_care_cmts";skipexporting++; missingcomment+="percentage HIV positive enrolled on care <br/>";}
-            else if(( (parseInt(dat.doc.started_art_perc_child)< 90 && parseInt(dat.doc.started_art_perc_child)!==0 && dat.doc.started_art_perc_child!=="" ) || (parseInt(dat.doc.started_art_perc_adult)< 90 && parseInt(dat.doc.started_art_perc_adult)!==0 && dat.doc.started_art_perc_adult!=="" ) || ( parseInt(dat.doc.started_art_perc_all)< 90 && parseInt(dat.doc.started_art_perc_all)!==0 && dat.doc.started_art_perc_all!=="" ) ) && dat.doc.started_art_cmts==="" ){missingcommentid="@started_art_cmts";skipexporting++; missingcomment+="percentage of target started on ART <br/>";}
-            else if(( (parseInt(dat.doc.viral_test_perc_child)< 90  && parseInt(dat.doc.viral_test_perc_child)!==0 && dat.doc.viral_test_perc_child!=="" ) || ( parseInt(dat.doc.viral_test_perc_adult)< 90 && parseInt(dat.doc.viral_test_perc_adult)!==0 && dat.doc.viral_test_perc_adult!=="" ) || ( parseInt(dat.doc.viral_test_perc_all)< 90 &&  parseInt(dat.doc.viral_test_perc_all)!==0 && dat.doc.viral_test_perc_all!==""  ) ) && dat.doc.viral_test_cmts==="" ){missingcommentid="@viral_test_cmts";skipexporting++; missingcomment+="percentage viral load tests done against target <br/>";}
-            else if(( (parseInt(dat.doc.ipt_done_perc_child)< 90 &&  parseInt(dat.doc.ipt_done_perc_child)!==0 && dat.doc.ipt_done_perc_child!=="" ) || ( parseInt(dat.doc.ipt_done_perc_adult)< 90 &&  parseInt(dat.doc.ipt_done_perc_adult)!==0 && dat.doc.ipt_done_perc_adult!=="" ) || ( parseInt(dat.doc.ipt_done_perc_all)< 90 &&  parseInt(dat.doc.ipt_done_perc_all)!==0 && dat.doc.ipt_done_perc_all!=="" )) && dat.doc.ipt_done_cmts==="" ){missingcommentid="@ipt_done_cmts";skipexporting++; missingcomment+="percentage IPT done against target <br/>";}
-            else if(( (parseInt(dat.doc.tested_perc_child)< 90 &&  parseInt(dat.doc.tested_perc_child)!==0 && dat.doc.tested_perc_child!=="" )|| ( parseInt(dat.doc.tested_perc_adult)< 90 &&  parseInt(dat.doc.tested_perc_adult)!==0 && dat.doc.tested_perc_adult!==""  ) || ( parseInt(dat.doc.tested_perc_all)< 90 &&  parseInt(dat.doc.tested_perc_all)!==0 && dat.doc.tested_perc_all!=="" ) ) && dat.doc.tested_cmts==="" ){missingcommentid="@tested_cmts"; skipexporting++; missingcomment+="percentage Tested against target <br/> ";}
+          // if(((parseInt(dat.doc.hiv_pos_care_perc_child)< 90 && parseInt(dat.doc.hiv_pos_care_perc_child)!==0 && dat.doc.hiv_pos_care_perc_child!=="" ) || (parseInt(dat.doc.hiv_pos_care_perc_adult)< 90 && parseInt(dat.doc.hiv_pos_care_perc_all)!==0 && dat.doc.hiv_pos_care_perc_all!=="" )|| (parseInt(dat.doc.hiv_pos_care_perc_all)< 90 && parseInt(dat.doc.hiv_pos_care_perc_child)!==0 && dat.doc.hiv_pos_care_perc_child!=="" )) && dat.doc.hiv_pos_care_cmts==="" ){missingcommentid="@hiv_pos_care_cmts";skipexporting++; missingcomment+="percentage HIV positive enrolled on care <br/>";}
+           if((  (parseInt(dat.doc.hiv_pos_care_perc_all)< 90 && parseInt(dat.doc.hiv_pos_care_perc_child)!==0 && dat.doc.hiv_pos_care_perc_child!=="" )) && dat.doc.hiv_pos_care_cmts==="" ){missingcommentid="@hiv_pos_care_cmts";skipexporting++; missingcomment+="percentage HIV positive enrolled on care <br/>";}
+            //else if(( (parseInt(dat.doc.started_art_perc_child)< 90 && parseInt(dat.doc.started_art_perc_child)!==0 && dat.doc.started_art_perc_child!=="" ) || (parseInt(dat.doc.started_art_perc_adult)< 90 && parseInt(dat.doc.started_art_perc_adult)!==0 && dat.doc.started_art_perc_adult!=="" ) || ( parseInt(dat.doc.started_art_perc_all)< 90 && parseInt(dat.doc.started_art_perc_all)!==0 && dat.doc.started_art_perc_all!=="" ) ) && dat.doc.started_art_cmts==="" ){missingcommentid="@started_art_cmts";skipexporting++; missingcomment+="percentage of target started on ART <br/>";}
+            else if(( ( parseInt(dat.doc.started_art_perc_all)< 90 && parseInt(dat.doc.started_art_perc_all)!==0 && dat.doc.started_art_perc_all!=="" ) ) && dat.doc.started_art_cmts==="" ){missingcommentid="@started_art_cmts";skipexporting++; missingcomment+="percentage of target started on ART <br/>";}
+           // else if(( (parseInt(dat.doc.viral_test_perc_child)< 90  && parseInt(dat.doc.viral_test_perc_child)!==0 && dat.doc.viral_test_perc_child!=="" ) || ( parseInt(dat.doc.viral_test_perc_adult)< 90 && parseInt(dat.doc.viral_test_perc_adult)!==0 && dat.doc.viral_test_perc_adult!=="" ) || ( parseInt(dat.doc.viral_test_perc_all)< 90 &&  parseInt(dat.doc.viral_test_perc_all)!==0 && dat.doc.viral_test_perc_all!==""  ) ) && dat.doc.viral_test_cmts==="" ){missingcommentid="@viral_test_cmts";skipexporting++; missingcomment+="percentage viral load tests done against target <br/>";}
+            else if(( ( parseInt(dat.doc.viral_test_perc_all)< 90 &&  parseInt(dat.doc.viral_test_perc_all)!==0 && dat.doc.viral_test_perc_all!==""  ) ) && dat.doc.viral_test_cmts==="" ){missingcommentid="@viral_test_cmts";skipexporting++; missingcomment+="percentage viral load tests done against target <br/>";}
+            //else if(( (parseInt(dat.doc.ipt_done_perc_child)< 90 &&  parseInt(dat.doc.ipt_done_perc_child)!==0 && dat.doc.ipt_done_perc_child!=="" ) || ( parseInt(dat.doc.ipt_done_perc_adult)< 90 &&  parseInt(dat.doc.ipt_done_perc_adult)!==0 && dat.doc.ipt_done_perc_adult!=="" ) || ( parseInt(dat.doc.ipt_done_perc_all)< 90 &&  parseInt(dat.doc.ipt_done_perc_all)!==0 && dat.doc.ipt_done_perc_all!=="" )) && dat.doc.ipt_done_cmts==="" ){missingcommentid="@ipt_done_cmts";skipexporting++; missingcomment+="percentage IPT done against target <br/>";}
+            else if((   ( parseInt(dat.doc.ipt_done_perc_all)< 90 &&  parseInt(dat.doc.ipt_done_perc_all)!==0 && dat.doc.ipt_done_perc_all!=="" )) && dat.doc.ipt_done_cmts==="" ){missingcommentid="@ipt_done_cmts";skipexporting++; missingcomment+="percentage IPT done against target <br/>";}
+           // else if(( (parseInt(dat.doc.tested_perc_child)< 90 &&  parseInt(dat.doc.tested_perc_child)!==0 && dat.doc.tested_perc_child!=="" )|| ( parseInt(dat.doc.tested_perc_adult)< 90 &&  parseInt(dat.doc.tested_perc_adult)!==0 && dat.doc.tested_perc_adult!==""  ) || ( parseInt(dat.doc.tested_perc_all)< 90 &&  parseInt(dat.doc.tested_perc_all)!==0 && dat.doc.tested_perc_all!=="" ) ) && dat.doc.tested_cmts==="" ){missingcommentid="@tested_cmts"; skipexporting++; missingcomment+="percentage Tested against target <br/> ";}
+            else if(( ( parseInt(dat.doc.tested_perc_all)< 90 &&  parseInt(dat.doc.tested_perc_all)!==0 && dat.doc.tested_perc_all!=="" ) ) && dat.doc.tested_cmts==="" ){missingcommentid="@tested_cmts"; skipexporting++; missingcomment+="percentage Tested against target <br/> ";}
+            //else if(  (parseInt(dat.doc.eid_done_perc)< 90 &&  parseInt(dat.doc.eid_done_perc)!==0 && dat.doc.tested_perc_child!=="" ) && dat.doc.eid_done_cmts==="" ){missingcommentid="@eid_done_cmts";skipexporting++; missingcomment+="percentage EID done test done against target <br/>";}
             else if(  (parseInt(dat.doc.eid_done_perc)< 90 &&  parseInt(dat.doc.eid_done_perc)!==0 && dat.doc.tested_perc_child!=="" ) && dat.doc.eid_done_cmts==="" ){missingcommentid="@eid_done_cmts";skipexporting++; missingcomment+="percentage EID done test done against target <br/>";}
-            else if( (parseInt(dat.doc.viral_load_mothers_perc)< 90 &&  parseInt(dat.doc.viral_load_mothers_perc)!==0 && dat.doc.viral_load_mothers_perc!=="" ) && dat.doc.viral_load_mothers_cmts==="" ){ missingcommentid="@viral_load_mothers_cmts"; skipexporting++; missingcomment=+"percentage viral load tests done for mothers against target <br/>";}
-            
+           // else if( (parseInt(dat.doc.viral_load_mothers_perc)< 90 &&  parseInt(dat.doc.viral_load_mothers_perc)!==0 && dat.doc.viral_load_mothers_perc!=="" ) && dat.doc.viral_load_mothers_cmts==="" ){ missingcommentid="@viral_load_mothers_cmts"; skipexporting++; missingcomment=+"percentage viral load tests done for mothers against target <br/>";}
+            //else if( (parseInt(dat.doc.viral_load_mothers_perc)< 90 &&  parseInt(dat.doc.viral_load_mothers_perc)!==0 && dat.doc.viral_load_mothers_perc!=="" ) && dat.doc.viral_load_mothers_cmts==="" ){ missingcommentid="@viral_load_mothers_cmts"; skipexporting++; missingcomment=+"percentage viral load tests done for mothers against target <br/>";}
+            else {skipexporting=0;}
            
               var hrf=" <button class='btn-lg button-info' data-dismiss='modal' onclick=\"loadsavedweekelydata('"+dat.doc._id+"','"+dat.doc.facility+"','yes"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
-
-
-
-            
-            
-    
-            
-        
         
         if(skipexporting===0){
             
@@ -3072,7 +3321,10 @@ function fillprogressbar(denominator_is_value,numer,denomin,progressbarid,datava
     
         //console.log(datavalueid+" "+datavalueid.indexOf("adult"));
        // console.log(" "+cmts);
-  
+  //Date : 12th Oct 2016 
+  //Change: show a default  of weekly performance for users.
+  //however, submit the annual and weekly percentage
+  //devide the annual  target with 52
         var applycoloronbar="yes";
         
         for(a=0;a<progressbarstoskip.length;a++){
@@ -3083,49 +3335,86 @@ function fillprogressbar(denominator_is_value,numer,denomin,progressbarid,datava
                 applycoloronbar="no";
             }
         }
-     //initially, we were using input values but now we are using data-previous attribute   
-   // var numerator=$("#"+numer).val();
+     //for weekly performance, we were using input values but for annual we are using data-previous attribute   
+    var weeklynumerator=$("#"+numer).val();//since we have weekly values on input field and annual cumulatives as data attributes fields
+    var annualdenominator=$("#"+denomin).val();//since we have annual targets as values on input fields and not weekly targets
+    
+    var weeklydenominator="";//may be a value for a certain indicator or a predetermined target 
+    
+    var annualnumerator=$("#"+numer).attr("data-"+numer);// numerator for the whole year is the current number enterd plus total for previous year
     //var denominator=$("#"+denomin).val();
-    
-     var numerator=$("#"+numer).attr("data-"+numer);
-     var denominator=$("#"+denomin).val();
+     
      if(denominator_is_value!=='yes'){
-         
-       denominator=  $("#"+denomin).attr("data-"+denomin);
-         
+       //this section was meant to be used in annual performance calculator. for cases where the denom is  a value for another indic e.g no positive/ no tested  
+       annualdenominator=$("#"+denomin).attr("data-"+denomin);
+       //this denominator should not be devide by weeks/quartes/months 
+       weeklydenominator=$("#"+denomin).val();
      }
+     else {
+         //devide target with number of weeks/quarters/months in a year
+         if(annualdenominator!==''){
+         
+         if(annualdenominator<=52 ){ annualdenominator=52;} //to avoid geting decimal points targets
+        weeklydenominator=Math.round(parseInt(annualdenominator)/52);
+        
+         }
+         
+          }
     
-      if(denominator!==''&&numerator!==''){  
+      if(weeklydenominator!==''&&weeklynumerator!==''){  
     //console.log(denomin+" "+denominator);
     //console.log(numer+" "+numerator);
-    var numeratordenominatorvalues=numerator+"/"+denominator;
-    var perc="0";
-    if(denominator==='0'){
+    var numeratordenominatorvalues=weeklynumerator+"/"+weeklydenominator;
+    //var numeratordenominatorvalues=weeklynumerator+"/"+weeklydenominator;
+    var weeklyperc="0";
+    var annualperc="0";
+    //weekly percentage
+    if(weeklydenominator==='0'){
         
-        perc=0;
+        weeklyperc=0;
         
                         }
-    else if(denominator===''|| numerator===''){
+    else if(weeklydenominator===''|| weeklynumerator===''){
         
-        perc=0;
+        weeklyperc=0;
     }
     else {
         
-        perc=Math.round((parseInt(numerator)/parseInt(denominator))*100);
+        weeklyperc=Math.round((parseInt(weeklynumerator)/parseInt(weeklydenominator))*100);
+       
+    }
+    
+    
+    //annual percentage
+    
+     if(annualdenominator==='0'){
+        
+        annualperc=0;
+        
+                        }
+    else if(annualdenominator===''|| annualnumerator===''){
+        
+        annualperc=0;
+    }
+    else {
+        
+        annualperc=Math.round((parseInt(annualnumerator)/parseInt(annualdenominator))*100);
         
       
     }
-     savepercents(perc,datavalueid);
+    console.log("Annual Percentage "+annualperc);
+    //call save percents
+     savepercents(weeklyperc,annualperc,datavalueid);
     //edit graph for display
     //if den and num are not blanks
-    if(numerator!=='' && denominator!=='')
+    if(weeklynumerator!=='' && weeklydenominator!=='')
     {
-    $("#"+progressbarid).width(perc+'%');
-    $("#"+datavalueid).html(numeratordenominatorvalues+" = ("+perc+"%)");
-    $("#"+datavalueid+"_in").val(perc);
+    $("#"+progressbarid).width(weeklyperc+'%');
+    $("#"+datavalueid).html(numeratordenominatorvalues+" = ("+weeklyperc+"%)");
+    $("#"+datavalueid+"_in").val(weeklyperc);
     
     if(applycoloronbar==='yes'){
-    if(perc>=90){
+    if(weeklyperc>=90){
      $("#"+progressbarid).removeClass('progress-bar-info progress-bar-danger').addClass('progress-bar-success');
      
      if(datavalueid.indexOf("adult")===-1 && datavalueid.indexOf("child")===-1 ){
@@ -3133,7 +3422,7 @@ function fillprogressbar(denominator_is_value,numer,denomin,progressbarid,datava
        }
                 }
                    
- else if(perc < 90 && perc !==0) {
+ else if(weeklyperc < 90 && weeklyperc !==0) {
        $("#"+progressbarid).removeClass('progress-bar-info progress-bar-success').addClass('progress-bar-danger');
        
        if(datavalueid.indexOf("adult")===-1 && datavalueid.indexOf("child")===-1 ){
@@ -3171,7 +3460,7 @@ function loadallpercents(){
     
     
     
-}
+                        }
 
 
 
@@ -3184,11 +3473,14 @@ function savecomments(commentname){
 
  $("#finishbutton").prop('disabled',true);
   var id=$("#rowid").val();
+  var mids=id.replace("_weekly","");
+  var idarray=[mids+"_weekly",mids+"_annual"];
+  for(v=0;v<idarray.length;v++){
   var comments=$("#"+commentname).val();
  
  console.log(comments);
  
-   weeklydatadb.get(id).then(function (doc) {
+   weeklydatadb.get(idarray[v]).then(function (doc) {
   
    //if(comments!==''){
        
@@ -3237,7 +3529,7 @@ function savecomments(commentname){
 });
 //updatesyncstatus(id);    
 
-
+}
    
     
 }// end of save comments function
@@ -3254,21 +3546,21 @@ function enablefinish(){
      $("#finishbutton").prop('disabled',false);
 }
 
-function savepercents(percent,percentname){
+function savepercents(weeklypercent,annualpercent,percentname){
  
  
   var id=$("#rowid").val();
   
-  var percentagevalue=percent;
- 
+
  
    //weeklydatadb.get(id).then(function (doc) {
   
-   if(percent!=='' && percent!=='NaN'){
+   if(weeklypercent!=='' && weeklypercent!=='NaN'){
      // alert(percent+" "+percentname);
-     
+     console.log(""+"data-"+percentname+"_in = "+annualpercent);
         //doc.inpatient_uptake_perc=percentagevalue;
-        $("#"+percentname).val(percentagevalue);
+        $("#"+percentname).val(weeklypercent);
+        $("#"+percentname+"_in").attr("data-"+percentname+"_in",annualpercent);//data-"+datafieldid+"_in
       
        
    }
@@ -3488,15 +3780,15 @@ function checkids(){
     console.log(newid +" **** "+id);
     if(newid!=='' && id!=='' && id!=='Select Facility Name__'){
     
-    if(newid===id){
+    if(newid.indexOf(id)>-1){
         //hide the save as new 
-        $("#savenewbutton").hide();
+        //$("#savenewbutton").hide();
         
                   }
-        else if(newid!==id){
+        else if(newid.indexOf(id)===-1){
         //hide the save as new 
-        $("#savenewbutton").show();
-        $("#updatebutton").hide();
+       // $("#savenewbutton").show();
+       // $("#updatebutton").hide();
         
                            } 
                   
@@ -3573,7 +3865,9 @@ function togglehidding(){
 function autocalculate(indicator){
     var calculation=$("#"+indicator).val();
    // var calculation=document.getElementById(indicator).value;
+ var isblank="no";
  
+ if(calculation===''){isblank="yes";}
     console.log(calculation);
     //var calculation1=calculation.replace("+","@");
     var sourcearray=calculation.split("+");
@@ -3587,8 +3881,16 @@ function autocalculate(indicator){
         if(sourcearray[b]!=='')
         {
            total=parseInt(total)+parseInt(sourcearray[b]); 
+           if(isblank==="yes"){
+               
+               
+                $("#"+indicator).val("");
+           }
+           else if(isblank==="no"){
            $("#"+indicator).val(total);
            console.log("Total___"+total);
+                 }
+           
         }
                                                
        if(b===(sourcearray.length-1)){
@@ -3607,7 +3909,7 @@ function autocalculate(indicator){
 function yearlytotal(indicator){
   //  
     var currentvalue=$("#"+indicator).val(); 
-    var previous=$("#"+indicator).data("previous_"+indicator);
+    var previous=$("#"+indicator).attr("data-previous_"+indicator);
     var newtotal=$("#"+indicator).data(""+indicator);
     
     
@@ -3630,10 +3932,11 @@ function yearlytotal(indicator){
 
 //____LOAD LAST CUMULATIVE RECORDS PRIOR TO THE SELECTED MONTH____
 
-          
+  //in this function we are only looking for the id for the last entereed record.
+  //if no valid id found, a 0 is passed
 
 function seachlastcumulative(facility,before_date){
-   var chosenid=0;
+   var chosenid='0';
            var maximumdatecopy=0;
     
   //  alert(id);
@@ -3665,7 +3968,7 @@ function seachlastcumulative(facility,before_date){
           pepfaryear=parseInt(datevals[0])-parseInt(1);  
             
             }
-           startdatekey=pepfaryear+datevals[1]+datevals[2];
+           startdatekey=pepfaryear+datevals[1]+"01";//when the year started
            
            var currentenddatekey=before_date.replace(/-/g,"");
           
@@ -3674,16 +3977,19 @@ function seachlastcumulative(facility,before_date){
            {
                var dat={};
 	   dat=doc.rows[a];
-               if(dat.doc.facility===facility){
+           var id_ya_sahi=dat.doc._id;
+           //consider the selected facility name and if id contains annual values
+               if(dat.doc.facility===facility && id_ya_sahi.indexOf('_weekly')===-1){
              //compare the selected date and all the end dates
              //check if the db end date is in between the pepfar year startdate and the entered end date
              //if the 
-             var dbenddate=dat.doc.enddate;
+            var dbenddate=dat.doc.enddate;
             var dbenddatekey=dbenddate.replace(/-/g,"");
              console.log(" pepfar start date is :"+startdatekey+" Db end date key is :"+dbenddatekey +" Entered end date key is :"+currentenddatekey+" Current maximum date is :"+maximumdatecopy);
 	  if((parseInt(dbenddatekey)>parseInt(startdatekey)) && (parseInt(dbenddatekey)>maximumdatecopy) && (parseInt(dbenddatekey)<currentenddatekey ) ) 
            {
                var tar=dat.doc.enddate;
+               
                maximumdatecopy=tar.replace(/-/g,"");
                chosenid=dat.doc._id;
            }
@@ -3696,11 +4002,11 @@ function seachlastcumulative(facility,before_date){
                      loadcumulative(chosenid);
                  }
                  
-          	 } //end of for loop
+         } //end of for loop
 	 
 	  	
 		
-  }).catch(function (err){console.log(err)});
+  }).catch(function (err){console.log(err+" after calling seachlastcumulative")});
 
        
        }//end of function searchlastcumulative 
@@ -3708,6 +4014,45 @@ function seachlastcumulative(facility,before_date){
        
   function loadcumulative(id){
    	
+        if(id!=='' ){
+            //if id is zero, replace previous value with 0 and data-indicator with current value ,
+            
+            if(id==='0'){
+              
+               
+                
+             for(b=0;b<allnontargetindicatorsarray.length;b++){
+                 $("#"+allnontargetindicatorsarray[b]).attr("data-previous_"+allnontargetindicatorsarray[b],0); 
+                 
+              var currentinputvalue=$("#"+allnontargetindicatorsarray[b]).val().trim();
+                 
+                 if( 1===1){
+                 if( currentinputvalue!==''){
+                     //replace 0 with current value
+                   console.log("Monitor logs__"+allnontargetindicatorsarray[b]+"_"+currentinputvalue);
+                     //console.log("Monitor logs__"+$("#"+allnontargetindicatorsarray[b]).val());
+                  $("#"+allnontargetindicatorsarray[b]).attr("data-"+allnontargetindicatorsarray[b],currentinputvalue);
+                  //$("#"+allindicatorsarray[c]).blur();
+                  //$("#"+allnontargetindicatorsarray[b]).blur();
+                  
+                                            }
+                 else {
+                     
+                 $("#"+allnontargetindicatorsarray[b]).attr("data-"+allnontargetindicatorsarray[b],0);
+                 
+                    }
+                }
+       
+                                            
+                    if(b===allnontargetindicatorsarray.length-1){
+                        
+                          
+                    }
+                    
+                                             }    
+            }
+            else {
+            
 	weeklydatadb.get(id).then(function (doc) {
        
   //populate the data- attributes with the correct data..
@@ -3760,8 +4105,8 @@ function seachlastcumulative(facility,before_date){
                                              
 
 });// end of db get
-
- 
+        }//end of else
+  }
 }// end of load cumulative
 
 

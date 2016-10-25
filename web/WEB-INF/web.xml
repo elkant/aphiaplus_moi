@@ -26,6 +26,14 @@
         <servlet-name>mail</servlet-name>
         <servlet-class>notification.mail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>excelreport_weekly</servlet-name>
+        <servlet-class>code.excelreport_weekly</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>settingtargets</servlet-name>
+        <servlet-class>Scripts.settingtargets</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>showfacils</servlet-name>
         <url-pattern>/showfacils</url-pattern>
@@ -49,6 +57,14 @@
     <servlet-mapping>
         <servlet-name>mail</servlet-name>
         <url-pattern>/mail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>excelreport_weekly</servlet-name>
+        <url-pattern>/excelreport_weekly</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>settingtargets</servlet-name>
+        <url-pattern>/settingtargets</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>-1</session-timeout>
