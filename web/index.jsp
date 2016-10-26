@@ -150,7 +150,7 @@ input:focus {
                         <div class="panel-body" style="width:100%;">
                             <form class="form form-vertical" action="#" method="post" id="weeklydataform">
                                 <table class='table table-striped table-bordered'  style="margin-left:  px;" >
-                                <tr><th>Data</th></tr>
+                                <tr><th style="text-align:center"><b>Enter Weekly Data</b></th></tr>
                                 <tr><td class="col-xs-12">
                                 <div class="control-group">
                                     <label><font color="red"><b>*</b></font> Week Beginning </label>
@@ -481,6 +481,20 @@ input:focus {
                                     </div>
                                 </div> 
                     
+                      <div class="control-group" >
+                                    <label>Report Type</label>
+                                    <div class="controls">
+                                        <select  name="rpt_type" id="rpt_type" style="width:100%;" class="form-control">
+                                           
+                                             <option title="From 1st October of the selected date year to the end date specified inside the same date year " value="excelreport">Cumulative</option>
+                                             <option title="Weekly data breakdown per sites" value="excelreport_weekly">Weekly</option>
+                                            
+                                            
+                                           
+                                        </select>
+                                    </div>
+                                </div>
+                    
                     <div class="control-group" >
                                     <label>County</label>
                                     <div class="controls">
@@ -607,8 +621,8 @@ input:focus {
                     
                  
     
-    //var hostname="http://104.45.29.195";
-  var hostname="http://localhost";
+    var hostname="http://104.45.29.195";
+  //var hostname="http://localhost";
 
      // todayHighlight: true, daysOfWeekDisabled: "0,6",clearBtn: true, autoclose: true,format: "yyyy-mm-dd",
                  </script>
@@ -3031,7 +3045,7 @@ function importdata(){
     
    // $('#exportbutton').on('click',function() {
     $("#exportbutton").prop("disabled",true);
-     $("#exportbutton").removeClass('btn-lg btn-success').addClass('btn btn-default');
+    $("#exportbutton").removeClass('btn-lg btn-success').addClass('btn btn-default');
 
                 //read db files that have not been synced
     
@@ -3054,7 +3068,7 @@ function importdata(){
 	     // console.log(dat.doc.facility);
               //how to reference each column 
               
-              //dat.doc._id
+              var idyangu=dat.doc._id;
 		  var num=parseInt(c)-1;
 	var missingcommentid="";
         if(dat.doc.syncstatus==="No" || dat.doc.syncstatus==="0" || dat.doc.syncstatus==="no")
@@ -3078,7 +3092,7 @@ function importdata(){
             //else if( (parseInt(dat.doc.viral_load_mothers_perc)< 90 &&  parseInt(dat.doc.viral_load_mothers_perc)!==0 && dat.doc.viral_load_mothers_perc!=="" ) && dat.doc.viral_load_mothers_cmts==="" ){ missingcommentid="@viral_load_mothers_cmts"; skipexporting++; missingcomment=+"percentage viral load tests done for mothers against target <br/>";}
             else {skipexporting=0;}
            
-              var hrf=" <button class='btn-lg button-info' data-dismiss='modal' onclick=\"loadsavedweekelydata('"+dat.doc._id+"','"+dat.doc.facility+"','yes"+missingcommentid+"'); \"> Enter Comments</button>";
+              var hrf=" <button class='btn-sm button-info' data-dismiss='modal' onclick=\"loadsavedweekelydata('"+dat.doc._id+"','"+dat.doc.facility+"','yes"+missingcommentid+"'); \"> Enter Comments</button>";
            
 
         
@@ -3198,6 +3212,11 @@ viral_load_mothers_perc:dat.doc.viral_load_mothers_perc,
                          });
             
                         }//end of if skipp exporting === 0
+                        //for annual exports, dont sync and dont show alert
+                        else if (skipexporting!==0 && idyangu.indexOf("annual")>=0) {
+                       //dont show export failure message     
+                            
+                        }
             else {
                 
                 
@@ -3706,7 +3725,7 @@ function getreport(){
     var exelstart=$("#startdaterpt").val();
     var exelend=$("#enddaterpt").val();
     var countyrpt=$("#rpt_county").val();
-        
+    var rpttypeurl=$("#rpt_type").val();   
         if (exelstart==='')
      {
          
@@ -3727,7 +3746,7 @@ function getreport(){
                 }
                 else {
                     //call the report generation page
-                 downloadrpt(exelstart,exelend,countyrpt) ;  
+                 downloadrpt(exelstart,exelend,countyrpt,rpttypeurl) ;  
                     
                 }
         
@@ -3736,14 +3755,14 @@ function getreport(){
 
 
 
-  function downloadrpt(startdate,enddate,cnty){
+  function downloadrpt(startdate,enddate,cnty,rpttypeurl){
       
                 $('.loading').show();
                 $('#excelreportbtn').hide();
                
                 //?startdate=" + startdate + "&enddate=" + enddate + "&cbos=" + cbos
              
-                var ur=hostname+":8080/aphiaplus_moi/excelreport?startdate=" + startdate + "&enddate=" + enddate+ "&county=" + cnty ;
+                var ur=hostname+":8080/aphiaplus_moi/"+rpttypeurl+"?startdate=" + startdate + "&enddate=" + enddate+ "&county=" + cnty ;
  console.log(ur);
                 $.fileDownload(ur).done(function () { $('.loading').hide(); $('#excelreportbtn').show(); $('#excelreportbtn').html("<i class='glyphicon glyphicon-ok'></i> Report Generated"); }).fail(function () { alert('Report generation failed, kindly try again!'); $('.loading').hide(); $('#excelreportbtn').show(); });
  

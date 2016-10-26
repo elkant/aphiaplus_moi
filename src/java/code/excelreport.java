@@ -96,9 +96,9 @@ ct.copymacros(sourcepath,np);
   
     
            Sheet rawdata = wb.getSheet("Facility Report");     
-            String startdate="2016-06-25";
+            String startdate="2016-10-01";
             
-            String enddate="2016-08-10";
+            String enddate="2016-10-30";
             String county="";
             
        
@@ -121,7 +121,7 @@ ct.copymacros(sourcepath,np);
             }
             String countywhere=" and 1=1";
             if(!county.equals("")){
-            countywhere="  and ( county like '"+county+"' )";
+            countywhere="  and ( county like '"+county+"' ) ";
             }
             
             
@@ -161,8 +161,8 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
 
             }
             
-            String where=" (enddate between '"+startdate+"' and '"+enddate+"')  "+countywhere+"  ";      
-            String where1=" (enddate between '"+startdate+"' and '"+enddate+"') ";      
+            String where=" (enddate between '"+startdate+"' and '"+enddate+"')  "+countywhere+" and (id not like '%_weekly%' )  ";      
+            String where1=" (enddate between '"+startdate+"' and '"+enddate+"')  and (id not like '%_weekly%' ) ";      
             
             //get data in report form and add into the various json macros.
 //String query="select facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total ,hiv_pos_child as hiv_pos_child , hiv_pos_adult as hiv_pos_adult  ,hiv_pos_total as hiv_pos_total  ,new_care_child as new_care_child ,new_care_adult as new_care_adult ,new_care_total as new_care_total  , new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child as started_art_child, started_art_adult as started_art_adult ,started_art_total as started_art_total ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child as viral_load_done_child ,viral_load_done_adult as viral_load_done_adult ,viral_load_done_total as viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child as ipt_child ,ipt_adult as ipt_adult ,ipt_total as ipt_total ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child as test_child ,test_adult as test_adult   ,test_total as test_total , pmtct_hiv_pos_target,pmtct_hiv_pos as pmtct_hiv_pos, eid_target  , eid_done as eid_done, viral_load_mothers_target, viral_load_mothers_done as viral_load_mothers_done  from weekly_data_new join facility on weekly_data_new.facilityname=facility.facility_name ";
@@ -305,7 +305,7 @@ String tested_cmts=null;
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=MOIS_Report_From" + startdate.replace(" ","-") +"_To_"+enddate.replace(" ","_") +".xlsm");
+        response.setHeader("Content-Disposition", "attachment; filename=MOIS_Cum_Report_From" + startdate.replace(" ","-") +"_To_"+enddate.replace(" ","_") +".xlsm");
         response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);

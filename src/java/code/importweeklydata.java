@@ -361,7 +361,7 @@ tested_cmts=request.getParameter("tested_cmts");
                         { 
                             if(!id.contains("annual")){ //notify user only when importing weekly summaries
                             txtresponse="<font color='green'> Data for <b> "+facilityname+" </b> updated succesfully for dates "+startdate+" to "+enddate+" </font>";
-                             sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
+                             sm.Sendemail("MOIS IMPORT","Hi ,  \nThis is to notify you that data for "+facilityname+" has been updated succesfully by user "+user+" for dates "+startdate+" to "+enddate+". \n \nPlease  do not reply to this mail. It is system generated ", "Updated MOIS Data for  "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org"+usermail);
                             }
                         }
                         else 
@@ -495,7 +495,7 @@ tested_cmts=request.getParameter("tested_cmts");
                             txtresponse="<font color='green'> Data for "+facilityname+" added succesfully for dates "+startdate+" to "+enddate+" </font>";
                            
                             //add team leaders variable at this point 
-                            sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org,MObuya@fhi360.org"+usermail);
+                            sm.Sendemail("MOIS IMPORT"," Hi, \nThis is to notify you that new data for "+facilityname+" has been added succesfully by   user "+user+" for dates "+startdate+" to "+enddate+". \n \n Please do not reply to this mail. It is system generated ", "MOIS data export for "+facilityname+" & dates "+startdate+" to "+enddate,"EKaunda@fhi360.org"+usermail);
                              }                          } 
                         else {
                              if(!id.contains("annual")){
