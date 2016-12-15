@@ -32,7 +32,7 @@ import org.joda.time.Weeks;
  *
  * @author Emmanuel E
  */
-public class excelreport_weekly extends HttpServlet {
+public class excelreport_cumulative extends HttpServlet {
 
   
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +41,7 @@ public class excelreport_weekly extends HttpServlet {
         try {
             /* TODO output your page here. You may use following sample code. */
    
-             String allpath = getServletContext().getRealPath("/MOIS_WEEKLY.xlsm");
+             String allpath = getServletContext().getRealPath("/MOIS.xlsm");
             
 XSSFWorkbook wb1;
  
@@ -56,7 +56,7 @@ dat2 = dat2.toString().replace(":", "_");
     
     String np=mydrive+":\\APHIAPLUS\\MOIS\\MACROS\\MOIS_REPORT"+dat2+".xlsm";
     //check if file exists
-     String sourcepath = getServletContext().getRealPath("/MOIS_WEEKLY.xlsm");
+     String sourcepath = getServletContext().getRealPath("/MOIS.xlsm");
              
     File f = new File(np);
 if(!f.exists()&& !f.isFile() ) {
@@ -164,21 +164,19 @@ int weeks = Weeks.weeksBetween(dateTime1, dateTime2).getWeeks();
             String where=" (enddate between '"+startdate+"' and '"+enddate+"')  "+countywhere+" and cur.id  like '%_weekly%' ";      
             String where1=" (enddate between '"+startdate+"' and '"+enddate+"') and weekly_data_new.id  like '%_weekly%'  ";      
             
-            String period="52";
+            String period="1";
             String yr=enddate.substring(0, 4);
-            
-             String tar[]=enddate.split("-");
+            String tar[]=enddate.split("-");
             
             int mwaka=new Integer(yr);
             if(new Integer(tar[1])>=10 && new Integer(tar[1])<=12){
             mwaka=mwaka+1;
             }
-            
             //get data in report form and add into the various json macros.
 //String query="select facilityname,startdate,enddate, hiv_pos_target_child,hiv_pos_target_adult,hiv_pos_target_total ,hiv_pos_child as hiv_pos_child , hiv_pos_adult as hiv_pos_adult  ,hiv_pos_total as hiv_pos_total  ,new_care_child as new_care_child ,new_care_adult as new_care_adult ,new_care_total as new_care_total  , new_art_target_child  ,new_art_target_adult  ,new_art_target_total  ,started_art_child as started_art_child, started_art_adult as started_art_adult ,started_art_total as started_art_total ,viral_load_target_child  ,viral_load_target_adult  ,viral_load_target_total  ,viral_load_done_child as viral_load_done_child ,viral_load_done_adult as viral_load_done_adult ,viral_load_done_total as viral_load_done_total  ,ipt_target_child  ,ipt_target_adult  ,ipt_target_total  ,ipt_child as ipt_child ,ipt_adult as ipt_adult ,ipt_total as ipt_total ,testing_target_child  ,testing_target_adult  ,testing_target_total  ,test_child as test_child ,test_adult as test_adult   ,test_total as test_total , pmtct_hiv_pos_target,pmtct_hiv_pos as pmtct_hiv_pos, eid_target  , eid_done as eid_done, viral_load_mothers_target, viral_load_mothers_done as viral_load_mothers_done  from weekly_data_new join facility on weekly_data_new.facilityname=facility.facility_name ";
 
-String query=" select facility.county,facility.subcounty,cur.facilityname,cur.startdate,cur.enddate,case when  ROUND(targets.testing_target_child/"+period+") >0 then ROUND(targets.testing_target_child/"+period+") else 1 end as testing_target_child,case when  ROUND(targets.testing_target_adult/"+period+") >0 then ROUND(targets.testing_target_adult/"+period+") else 1 end as testing_target_adult,case when  ROUND(targets.testing_target_total/"+period+") >0 then ROUND(targets.testing_target_total/"+period+") else 1 end as testing_target_total,cur.test_child,cur.test_adult,cur.test_total,cur.tested_perc_child,cur.tested_perc_adult,cur.tested_perc_all,cur.tested_cmts,case when  ROUND(targets.hiv_pos_target_child/"+period+") >0 then ROUND(targets.hiv_pos_target_child/"+period+") else 1 end as hiv_pos_target_child,case when  ROUND(targets.hiv_pos_target_adult/"+period+") >0 then ROUND(targets.hiv_pos_target_adult/"+period+") else 1 end as hiv_pos_target_adult,case when  ROUND(targets.hiv_pos_target_total/"+period+") >0 then ROUND(targets.hiv_pos_target_total/"+period+") else 1 end as hiv_pos_target_total,cur.hiv_pos_child,cur.hiv_pos_adult,cur.hiv_pos_total,cur.hiv_pos_yield_perc_child,cur.hiv_pos_yield_perc_adult,cur.hiv_pos_yield_perc_all,cur.hiv_pos_yield_cmts,cur.new_care_child,cur.new_care_adult,cur.new_care_total,cur.hiv_pos_care_perc_child,cur.hiv_pos_care_perc_adult,cur.hiv_pos_care_perc_all,cur.hiv_pos_care_cmts,case when  ROUND(targets.new_art_target_child/"+period+") >0 then ROUND(targets.new_art_target_child/"+period+") else 1 end as new_art_target_child,case when  ROUND(targets.new_art_target_adult/"+period+") >0 then ROUND(targets.new_art_target_adult/"+period+") else 1 end as new_art_target_adult,case when  ROUND(targets.new_art_target_total/"+period+") >0 then ROUND(targets.new_art_target_total/"+period+") else 1 end as new_art_target_total,cur.started_art_child,cur.started_art_adult,cur.started_art_total,cur.started_art_perc_child,cur.started_art_perc_adult,cur.started_art_perc_all,cur.started_art_cmts,case when  ROUND(targets.viral_load_target_child/"+period+") >0 then ROUND(targets.viral_load_target_child/"+period+") else 1 end as viral_load_target_child,case when  ROUND(targets.viral_load_target_adult/"+period+") >0 then ROUND(targets.viral_load_target_adult/"+period+") else 1 end as viral_load_target_adult,case when  ROUND(targets.viral_load_target_total/"+period+") >0 then ROUND(targets.viral_load_target_total/"+period+") else 1 end as viral_load_target_total,cur.viral_load_done_child,cur.viral_load_done_adult,cur.viral_load_done_total,cur.viral_test_perc_child,cur.viral_test_perc_adult,cur.viral_test_perc_all,cur.viral_test_cmts,case when  ROUND(targets.ipt_target_child/"+period+") >0 then ROUND(targets.ipt_target_child/"+period+") else 1 end as ipt_target_child,case when  ROUND(targets.ipt_target_adult/"+period+") >0 then ROUND(targets.ipt_target_adult/"+period+") else 1 end as ipt_target_adult,case when  ROUND(targets.ipt_target_total/"+period+") >0 then ROUND(targets.ipt_target_total/"+period+") else 1 end as ipt_target_total,cur.ipt_child,cur.ipt_adult,cur.ipt_total,cur.ipt_done_perc_child,cur.ipt_done_perc_adult,cur.ipt_done_perc_all,cur.ipt_done_cmts,case when  ROUND(targets.pmtct_hiv_pos_target/"+period+") >0 then ROUND(targets.pmtct_hiv_pos_target/"+period+") else 1 end as pmtct_hiv_pos_target,cur.pmtct_hiv_pos,cur.pmtct_hiv_pos_perc,cur.pmtct_hiv_pos_cmts,case when  ROUND(targets.eid_target/"+period+") >0 then ROUND(targets.eid_target/"+period+") else 1 end as eid_target,cur.eid_done,cur.eid_done_perc,cur.eid_done_cmts,case when  ROUND(targets.viral_load_mothers_target/"+period+") >0 then ROUND(targets.viral_load_mothers_target/"+period+") else 1 end as viral_load_mothers_target,cur.viral_load_mothers_done,cur.viral_load_mothers_perc,cur.viral_load_mothers_cmts  from weekly_data_new cur join (facility join targets on (facility.mflcode=targets.facility and targets.year='"+mwaka+"' ) ) on cur.facilityname=facility.facility_name where  "+where+" "+
-" group by cur.id ";
+String query=" select facility.county,facility.subcounty,cur.facilityname,cur.startdate,cur.enddate,case when  ROUND(targets.testing_target_child/"+period+") >0 then ROUND(targets.testing_target_child/"+period+") else 1 end as testing_target_child,case when  ROUND(targets.testing_target_adult/"+period+") >0 then ROUND(targets.testing_target_adult/"+period+") else 1 end as testing_target_adult,case when  ROUND(targets.testing_target_total/"+period+") >0 then ROUND(targets.testing_target_total/"+period+") else 1 end as testing_target_total,SUM(cur.test_child) as test_child,SUM(cur.test_adult) as test_adult,SUM(cur.test_total) as test_total,AVG(cur.tested_perc_child) as tested_perc_child,AVG(cur.tested_perc_adult) as tested_perc_adult,AVG(cur.tested_perc_all) as tested_perc_all,cur.tested_cmts,case when  ROUND(targets.hiv_pos_target_child/"+period+") >0 then ROUND(targets.hiv_pos_target_child/"+period+") else 1 end as hiv_pos_target_child,case when  ROUND(targets.hiv_pos_target_adult/"+period+") >0 then ROUND(targets.hiv_pos_target_adult/"+period+") else 1 end as hiv_pos_target_adult,case when  ROUND(targets.hiv_pos_target_total/"+period+") >0 then ROUND(targets.hiv_pos_target_total/"+period+") else 1 end as hiv_pos_target_total,SUM(cur.hiv_pos_child) as hiv_pos_child,SUM(cur.hiv_pos_adult) as hiv_pos_adult,SUM(cur.hiv_pos_total) as hiv_pos_total,AVG(cur.hiv_pos_yield_perc_child) as hiv_pos_yield_perc_child,AVG(cur.hiv_pos_yield_perc_adult) as hiv_pos_yield_perc_adult,AVG(cur.hiv_pos_yield_perc_all) as hiv_pos_yield_perc_all,cur.hiv_pos_yield_cmts,SUM(cur.new_care_child) as new_care_child,SUM(cur.new_care_adult) as new_care_adult,SUM(cur.new_care_total) as new_care_total,AVG(cur.hiv_pos_care_perc_child) as hiv_pos_care_perc_child,AVG(cur.hiv_pos_care_perc_adult) as hiv_pos_care_perc_adult,AVG(cur.hiv_pos_care_perc_all) as hiv_pos_care_perc_all,cur.hiv_pos_care_cmts,case when  ROUND(targets.new_art_target_child/"+period+") >0 then ROUND(targets.new_art_target_child/"+period+") else 1 end as new_art_target_child,case when  ROUND(targets.new_art_target_adult/"+period+") >0 then ROUND(targets.new_art_target_adult/"+period+") else 1 end as new_art_target_adult,case when  ROUND(targets.new_art_target_total/"+period+") >0 then ROUND(targets.new_art_target_total/"+period+") else 1 end as new_art_target_total,SUM(cur.started_art_child) as started_art_child,SUM(cur.started_art_adult) as started_art_adult,SUM(cur.started_art_total) as started_art_total,AVG(cur.started_art_perc_child) as started_art_perc_child,AVG(cur.started_art_perc_adult) as started_art_perc_adult, AVG(cur.started_art_perc_all) as started_art_perc_all,cur.started_art_cmts,case when  ROUND(targets.viral_load_target_child/"+period+") >0 then ROUND(targets.viral_load_target_child/"+period+") else 1 end as viral_load_target_child,case when  ROUND(targets.viral_load_target_adult/"+period+") >0 then ROUND(targets.viral_load_target_adult/"+period+") else 1 end as viral_load_target_adult,case when  ROUND(targets.viral_load_target_total/"+period+") >0 then ROUND(targets.viral_load_target_total/"+period+") else 1 end as viral_load_target_total,SUM(cur.viral_load_done_child) as viral_load_done_child,SUM(cur.viral_load_done_adult) as viral_load_done_adult, SUM(cur.viral_load_done_total) as viral_load_done_total,AVG(cur.viral_test_perc_child) as viral_test_perc_child,AVG(cur.viral_test_perc_adult) as viral_test_perc_adult, AVG(cur.viral_test_perc_all) as viral_test_perc_all,cur.viral_test_cmts,case when  ROUND(targets.ipt_target_child/"+period+") >0 then ROUND(targets.ipt_target_child/"+period+") else 1 end as ipt_target_child,case when  ROUND(targets.ipt_target_adult/"+period+") >0 then ROUND(targets.ipt_target_adult/"+period+") else 1 end as ipt_target_adult,case when  ROUND(targets.ipt_target_total/"+period+") >0 then ROUND(targets.ipt_target_total/"+period+") else 1 end as ipt_target_total,SUM(cur.ipt_child) as ipt_child,SUM(cur.ipt_adult) as ipt_adult ,SUM(cur.ipt_total) as ipt_total,AVG(cur.ipt_done_perc_child) as ipt_done_perc_child,AVG(cur.ipt_done_perc_adult) as ipt_done_perc_adult, AVG(cur.ipt_done_perc_all) as ipt_done_perc_all,cur.ipt_done_cmts,case when ROUND(targets.pmtct_hiv_pos_target/"+period+") >0 then ROUND(targets.pmtct_hiv_pos_target/"+period+") else 1 end as pmtct_hiv_pos_target,SUM(cur.pmtct_hiv_pos) as pmtct_hiv_pos,AVG(cur.pmtct_hiv_pos_perc) as pmtct_hiv_pos_perc,cur.pmtct_hiv_pos_cmts,case when  ROUND(targets.eid_target/"+period+") >0 then ROUND(targets.eid_target/"+period+") else 1 end as eid_target,SUM(cur.eid_done) as eid_done,AVG(cur.eid_done_perc) as eid_done_perc,cur.eid_done_cmts,case when  ROUND(targets.viral_load_mothers_target/"+period+") >0 then ROUND(targets.viral_load_mothers_target/"+period+") else 1 end as viral_load_mothers_target,SUM(cur.viral_load_mothers_done) as viral_load_mothers_done,AVG(cur.viral_load_mothers_perc) as viral_load_mothers_perc,cur.viral_load_mothers_cmts  from weekly_data_new cur join (facility join targets on (facility.mflcode=targets.facility and targets.year='"+mwaka+"' ) ) on cur.facilityname=facility.facility_name where  "+where+" "+
+" group by facilityname ";
 
             System.out.println(""+query);
             try {
@@ -270,7 +268,9 @@ String tested_cmts=null;
                     }
                 }
                 else {
+                    
                  ce.setCellValue(conn.rs.getString(a));
+                
                 }
             
                 
@@ -315,7 +315,7 @@ String tested_cmts=null;
         response.setContentType("application/ms-excel");
         response.setContentLength(outArray.length);
         response.setHeader("Expires:", "0"); // eliminates browser caching
-        response.setHeader("Content-Disposition", "attachment; filename=MOIS_Weekly_Report_From" + startdate.replace(" ","-") +"_To_"+enddate.replace(" ","_") +".xlsm");
+        response.setHeader("Content-Disposition", "attachment; filename=MOIS_Cum_Rpt_From" + startdate.replace(" ","-") +"_To_"+enddate.replace(" ","_") +".xlsm");
         response.setHeader("Set-Cookie","fileDownload=true; path=/");
         OutputStream outStream = response.getOutputStream();
         outStream.write(outArray);

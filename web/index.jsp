@@ -88,7 +88,7 @@ input:focus {
 
             
             
-          <h5 style="text-align: center;color:blue;">Matching Order Indicators system version 2.0.0 </h5>
+          <h5 style="text-align: center;color:blue;">Marching Order Indicators system version 2.0.0 </h5>
 
       
       
@@ -486,7 +486,7 @@ input:focus {
                                     <div class="controls">
                                         <select  name="rpt_type" id="rpt_type" style="width:100%;" class="form-control">
                                            
-                                             <option title="From 1st October of the selected date year to the end date specified inside the same date year " value="excelreport">Cumulative</option>
+                                             <option title="From 1st October of the selected date year to the end date specified inside the same date year " value="excelreport_cumulative">Cumulative</option>
                                              <option title="Weekly data breakdown per sites" value="excelreport_weekly">Weekly</option>
                                             
                                             

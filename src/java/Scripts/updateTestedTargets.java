@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author EKaunda
  */
-public class settingtargets extends HttpServlet {
+public class updateTestedTargets extends HttpServlet {
 
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -31,37 +31,25 @@ public class settingtargets extends HttpServlet {
           dbConnweb conn= new dbConnweb();
           String facilityname="";
           //String datimfacility="";
-          String allfacils="select * from tested_targets where MflCode is  null "; 
+          String allfacils="select Children,Adults,Total,MflCode from tested_targets  "; 
           conn.rs=conn.st.executeQuery(allfacils);
          while(conn.rs.next()){
             
-            //get the mfl code from imis
-            if(conn.rs.getString("Facility")!=null){
-            facilityname=conn.rs.getString("Facility");
-            }
             
           
-            String getmfl="select mflcode from pwp.health_facility where hf_name like ? and mflcode is not null";
             
-            
-            //'%"+facilityname+"'
-           // conn.rs1=conn.st1.executeQuery(getmfl);
-              conn.pst1=conn.conne.prepareStatement(getmfl); 
-              conn.pst1.setString(1, "%"+facilityname);
-              conn.rs1=conn.pst1.executeQuery();
-            while(conn.rs1.next()){
                 
-            System.out.println("__MFL"+conn.rs1.getString(1)+"  Facility Name : "+facilityname);
+            System.out.println("__MFL"+conn.rs.getString(4)+"  Tested Total : "+conn.rs.getString(1));
              
            // out.println("MFL "+conn.rs1.getString(1)+"  Facility Name : "+facilityname+"<br/>");
             //now update
-            String updatecode="update tested_targets set MflCode='"+conn.rs1.getString(1)+"' where id='"+conn.rs.getString("id")+"' ";
+            String updatecode="update targets set testing_target_child='"+conn.rs.getString(1)+"' ,testing_target_adult='"+conn.rs.getString(2)+"', testing_target_total='"+conn.rs.getString(3)+"' where id='"+conn.rs.getString(4)+"_2017' ";
                 out.println(""+updatecode+"<br/>");
                 
                 
             conn.st2.executeUpdate(updatecode);
             
-                                  }
+                                 
             
                               }
           
